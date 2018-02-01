@@ -85,13 +85,15 @@ header{
 }
 
 /*--- list style ---*/
+
 ol {
   counter-reset:li;
   margin: 0;
   padding: 0;
-  height: calc(100vh - 150px - 0.6em);
-  overflow-y: scroll;
+/*  height: calc(100vh - 151px - 0.6em);
+  overflow-y: scroll;*/
 }
+
 ol > li {
   list-style: none;
   margin: 0 0 0em 1.6em;
@@ -99,6 +101,7 @@ ol > li {
   position: relative;
   border-bottom: 1px solid #d6d6d6;
 }
+
 ol > li:before {
   content: counter(li);
   counter-increment:li;
@@ -114,12 +117,29 @@ ol > li:hover {
   background-color: #DDE4E8;
 }
 
+ol > li.selection {
+  background-color: #08C;
+  color: white;
+}
+/*
+ol > li.selection:before {
+  content: ">";
+  counter-increment:li;
+  position: absolute;
+    left: -1.6em;
+  text-align: center;
+  width: 1.6em;
+  border-bottom: 1px solid #d6d6d6;
+  border-right: 1px solid #d6d6d6;
+}*/
+
 /*--- /list style ---*/
 
 #documentList img{
 	float: right;
-	width: 4%;
-	height: 4%;
+	width: 1em;
+	height: 1em;
+	margin-top: 3px;
 }
 
 /*------------------------------------*\
