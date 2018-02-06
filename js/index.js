@@ -137,18 +137,5 @@ let getDocumentList = id => {
 }
 
 let downloadDocument = filename => {
-	let data = {filename : filename};
-
-	$.ajax({
-        url: 'http://igrus.mireene.com/php/dms_php/downloadDocument.php',
-        type: 'POST',
-        data: data,
-        dataType: 'json',
-        success: function(data) {
-
-        },
-        error: function(request, status, error) {
-            console.log(request, status, error);
-        },
-    });
+    window.location.href = "http://igrus.mireene.com/medical_document/" + filename;
 }

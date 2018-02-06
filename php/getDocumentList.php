@@ -20,7 +20,9 @@ $result = mysqli_query($connection,"SELECT * FROM `dms_document` WHERE `c3_code`
 while ($row = mysqli_fetch_array($result)) {
 	$row_array['name'] = $row['name'];
 	$row_array['code'] = $row['code'];
-	$row_array['filename'] = $row['filename'];
+	$row_array['filename'] = urlencode(iconv('UTF-8', 'EUC-KR', $row['filename']));
+	
+
 	
 	array_push($return_arr,$row_array);
 }
