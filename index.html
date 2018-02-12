@@ -101,7 +101,7 @@
 
 	<!-- Document Enrollment  Modal -->
 	<div class="modal fade" id="documentEnrollmentModal" tabindex="-1" role="dialog" aria-labelledby="documentEnrollmentModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
+	  <div class="modal-dialog modal-lg" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <h5 class="modal-title" id="documentEnrollmentModalLabel">문서 등록</h5>
@@ -111,26 +111,38 @@
 	      </div>
 
 	      <div class="modal-body">
-	      	<form id="upload" action="upload.php" method="POST" enctype="multipart/form-data">
+	      	<div class="row">
+	      		<select class="custom-select col-md-4" id="selectC1" onchange="getselectC2()">
+				  <option disabled selected value> -- </option>
+				</select>
+				<select class="custom-select col-md-4" id="selectC2" onchange="getselectC3()">
+				  <option disabled selected value> -- </option>
+				</select>
+				<select class="custom-select col-md-4" id="selectC3">
+				  <option disabled selected value> -- </option>
+				</select>
+	      	</div>
+	      	
+	      	<form id="upload" enctype="multipart/form-data">
 
 				<fieldset>
-				<input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000" />
+				<input type="hidden" id="MAX_FILE_SIZE" name="file" value="300000" />
 
 				<div>
 					<div id="filedrag"><i class="fas fa-upload"></i>  Drop files here or <label for="fileselect">Browse</label>
-					<input type="file" name="fileselect[]" id="fileselect" style="display : none;" data-multiple-caption="{count} files selected" multiple="multiple">
+					<input type="file" name="file" id="fileselect" style="display : none;" data-multiple-caption="{count} files selected" multiple="multiple">
 						<div id="messages">
-				</div>
+						</div>
 					</div>
 				</div>
 
 				<div id="submitbutton">
-					<button type="submit" class="btn">Upload Files</button>
+					<button type="button" class="btn" onclick="fileUpload()">Upload Files</button>
 				</div>
 
 				</fieldset>
 
-				</form>
+			</form>
 
 
 				

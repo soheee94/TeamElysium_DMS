@@ -8,6 +8,7 @@ window.onload = () => {
 
 let getCategory1 = () => {
 	let category1 = document.getElementById("category1");
+    let selectC1 = document.getElementById("selectC1");
 
 	$.ajax({
         url: 'http://igrus.mireene.com/php/dms_php/getCategory1.php',
@@ -21,6 +22,12 @@ let getCategory1 = () => {
         		list.textContent = value.name;
 
         		category1.appendChild(list);
+
+                let option = document.createElement("option");
+                option.textContent = value.name;
+                option.setAttribute("value", value.code);
+
+                selectC1.appendChild(option);
         	}
         },
         error: function(request, status, error) {
@@ -140,6 +147,88 @@ let downloadDocument = filename => {
     window.location.href = "http://igrus.mireene.com/medical_document/" + filename;
 }
 
+let getselectC2 = () => {
+    let selectC2 = document.getElementById("selectC2");
+    let selectC1 = document.getElementById("selectC1");
+    let id = selectC1.options[selectC1.selectedIndex].value;
+
+    // $("#selectC2").empty();
+    // $("#selectC3").empty();
+
+    let data = {code : id};
+
+    $.ajax({
+        url: 'http://igrus.mireene.com/php/dms_php/getCategory2.php',
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        success: function(data) {
+            for(let value of data){
+                let option = document.createElement("option");
+                option.setAttribute("value", value.code);
+                option.textContent = value.name;
+
+                selectC2.appendChild(option);
+            }
+        },
+        error: function(request, status, error) {
+            console.log(request, status, error);
+        },
+    });
+
+}
+
+let getselectC3 = () => {
+    let selectC2 = document.getElementById("selectC2");
+    let selectC3 = document.getElementById("selectC3");
+    let id = selectC2.options[selectC2.selectedIndex].value;
+
+    // $("#selectC3").empty();
+
+    let data = {code : id};
+
+    $.ajax({
+        url: 'http://igrus.mireene.com/php/dms_php/getCategory3.php',
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        success: function(data) {
+            for(let value of data){
+                let option = document.createElement("option");
+                option.setAttribute("value", value.code);
+                option.textContent = value.name;
+
+                selectC3.appendChild(option);
+            }
+        },
+        error: function(request, status, error) {
+            console.log(request, status, error);
+        },
+    });
+    
+}
+
+let data = new FormData();
+
+let fileUpload = () => {
+    $.ajax({
+        url: 'http://igrus.mireene.com/php/dms_php/savefile.php',
+        type: 'POST',
+        contentType: 'multipart/form-data',
+        data: data,
+        processData: false,
+        success: function(data) {
+
+            console.log(data);
+        },
+        error: function(request, status, error) {
+            console.log(request, status, error);
+        },
+    });
+
+    return false;
+}
+
 // drag drop upload files
 // getElementById
 function $id(id) {
@@ -164,8 +253,7 @@ if (window.File && window.FileList && window.FileReader) {
 function Init() {
 
     var fileselect = $id("fileselect"),
-        filedrag = $id("filedrag"),
-        submitbutton = $id("submitbutton");
+        filedrag = $id("filedrag");
 
     // file select
     fileselect.addEventListener("change", FileSelectHandler, false);
@@ -179,9 +267,7 @@ function Init() {
         filedrag.addEventListener("dragleave", FileDragHover, false);
         filedrag.addEventListener("drop", FileSelectHandler, false);
         filedrag.style.display = "block";
-        
-        // // remove submit button
-        // submitbutton.style.display = "none";
+
     }
 
 }
@@ -207,13 +293,13 @@ function FileSelectHandler(e) {
     // process all File objects
     for (var i = 0, f; f = files[i]; i++) {
         ParseFile(f);
+        data.append("file", f);
     }
 
 }
 
 
 function ParseFile(file) {
-
     Output(
         "<p>File info: <strong>" + file.name +
         "</strong> type: <strong>" + file.type +
