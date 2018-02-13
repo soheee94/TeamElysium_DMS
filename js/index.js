@@ -204,30 +204,47 @@ let getselectC3 = () => {
         error: function(request, status, error) {
             console.log(request, status, error);
         },
-    });
-    
+    });    
 }
 
-let data = new FormData();
+//file upload
+$("#upload").submit(function(e) {
+    e.preventDefault();    
+    let formData = new FormData(this);
 
-let fileUpload = () => {
-    $.ajax({
-        url: 'http://igrus.mireene.com/php/dms_php/savefile.php',
-        type: 'POST',
-        contentType: 'multipart/form-data',
-        data: data,
-        processData: false,
-        success: function(data) {
+    let filecnt = document.getElementById('fileselect').files.length;
 
-            console.log(data);
-        },
-        error: function(request, status, error) {
-            console.log(request, status, error);
-        },
-    });
 
-    return false;
-}
+
+    let c3code = document.getElementById("selectC3").value;
+
+    if(c3code !== "" && filecnt !== 0){
+        formData.append('c3_code', c3code);
+
+        $.ajax({
+            url: 'http://igrus.mireene.com/php/dms_php/savefile.php',
+            type: 'POST',
+            data: formData,
+            success: function (data) {
+                alert(data);
+                document.getElementById("messages").innerHTML = "";
+                document.getElementById("upload").reset();
+                return false;
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+    }
+    else if(filecnt === 0){
+        alert("파일을 첨부해주세요.");
+    }
+    else{
+        alert("분류를 선택해주세요.");
+    }
+
+
+});
 
 // drag drop upload files
 // getElementById
@@ -292,19 +309,29 @@ function FileSelectHandler(e) {
 
     // process all File objects
     for (var i = 0, f; f = files[i]; i++) {
-        ParseFile(f);
-        data.append("file", f);
+        ParseFile(f, i);
     }
 
 }
 
 
-function ParseFile(file) {
+function ParseFile(file, index) {
     Output(
         "<p>File info: <strong>" + file.name +
         "</strong> type: <strong>" + file.type +
         "</strong> size: <strong>" + file.size +
-        "</strong> bytes</p>"
-    );
-    
+        "</strong> bytes" +
+        "<i class='fas fa-times-circle' onClick = 'deleteFileList("+ index +")'></i> </p>"
+    );    
 }
+
+//TODO
+let deleteFileList = index => {
+    let files = document.getElementById('fileselect').value;
+    let formData = new FormData(this);
+    console.log(files);
+
+    
+
+    console.log(files);
+} 

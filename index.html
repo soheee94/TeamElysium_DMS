@@ -123,21 +123,22 @@
 				</select>
 	      	</div>
 	      	
-	      	<form id="upload" enctype="multipart/form-data">
+	      	<form id="upload" method="POST" enctype="multipart/form-data">
 
 				<fieldset>
 				<input type="hidden" id="MAX_FILE_SIZE" name="file" value="300000" />
 
 				<div>
 					<div id="filedrag"><i class="fas fa-upload"></i>  Drop files here or <label for="fileselect">Browse</label>
-					<input type="file" name="file" id="fileselect" style="display : none;" data-multiple-caption="{count} files selected" multiple="multiple">
-						<div id="messages">
-						</div>
+					<input type="file" name="file[]" id="fileselect" style="display : none;" data-multiple-caption="{count} files selected" multiple="multiple">
+					</div>
+
+					<div id="messages">
 					</div>
 				</div>
 
 				<div id="submitbutton">
-					<button type="button" class="btn" onclick="fileUpload()">Upload Files</button>
+					<button type="submit" class="btn">Upload Files</button>
 				</div>
 
 				</fieldset>
