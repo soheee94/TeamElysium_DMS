@@ -123,6 +123,9 @@ let getDocumentList = id => {
         	for(let value of data){
         		let list = document.createElement("li");
         		list.setAttribute("id", value.code);
+                list.setAttribute("onClick", "selectDocument(this.id)");
+                list.setAttribute("data-file", value.encodefilename);
+                list.setAttribute("data-c3code", value.c3_code);
         		list.textContent = value.name;
 
         		let downloadbtn = document.createElement("button");
@@ -141,6 +144,38 @@ let getDocumentList = id => {
         },
     });
 
+}
+
+let selectDocumentid;
+
+let selectDocument = id => {
+    selectDocumentid = document.getElementById(id);
+    selectDocumentid.classList.add("selection");
+    $("#"+id).siblings().removeClass("selection");
+}
+
+let deleteDocument = () => {
+    if(confirm("'"+selectDocumentid.textContent.replace("다운로드","") + "' 을(를) 정말 삭제하시겠습니까?")){
+        let id = selectDocumentid.id;
+        let filename = selectDocumentid.getAttribute("data-file");
+        let c3code = selectDocumentid.getAttribute("data-c3code");
+
+        let data = {code : id, filename : filename};
+
+        $.ajax({
+            url: 'http://igrus.mireene.com/php/dms_php/deletefile.php',
+            type: 'POST',
+            data: data,
+            dataType: 'html',
+            success: function(data) {
+                alert("삭제가 완료되었습니다!");
+                getDocumentList(c3code);
+            },
+            error: function(request, status, error) {
+                console.log(request, status, error);
+            },
+        });
+    }
 }
 
 let downloadDocument = filename => {
@@ -213,9 +248,6 @@ $("#upload").submit(function(e) {
     let formData = new FormData(this);
 
     let filecnt = document.getElementById('fileselect').files.length;
-
-
-
     let c3code = document.getElementById("selectC3").value;
 
     if(c3code !== "" && filecnt !== 0){
@@ -243,7 +275,6 @@ $("#upload").submit(function(e) {
         alert("분류를 선택해주세요.");
     }
 
-
 });
 
 // drag drop upload files
@@ -269,23 +300,21 @@ if (window.File && window.FileList && window.FileReader) {
 // initialize
 function Init() {
 
-    var fileselect = $id("fileselect"),
-        filedrag = $id("filedrag");
+    var fileselect = $id("fileselect");
 
     // file select
     fileselect.addEventListener("change", FileSelectHandler, false);
 
-    // is XHR2 available?
-    var xhr = new XMLHttpRequest();
-    if (xhr.upload) {
-    
-        // file drop
-        filedrag.addEventListener("dragover", FileDragHover, false);
-        filedrag.addEventListener("dragleave", FileDragHover, false);
-        filedrag.addEventListener("drop", FileSelectHandler, false);
-        filedrag.style.display = "block";
+    // // is XHR2 available?
+    // var xhr = new XMLHttpRequest();
+    // if (xhr.upload) {    
+    //     // file drop
+    //     filedrag.addEventListener("dragover", FileDragHover, false);
+    //     filedrag.addEventListener("dragleave", FileDragHover, false);
+    //     filedrag.addEventListener("drop", FileSelectHandler, false);
+    //     filedrag.style.display = "block";
 
-    }
+    // }
 
 }
 
@@ -320,18 +349,7 @@ function ParseFile(file, index) {
         "<p>File info: <strong>" + file.name +
         "</strong> type: <strong>" + file.type +
         "</strong> size: <strong>" + file.size +
-        "</strong> bytes" +
-        "<i class='fas fa-times-circle' onClick = 'deleteFileList("+ index +")'></i> </p>"
+        "</strong> bytes </p>"
     );    
 }
 
-//TODO
-let deleteFileList = index => {
-    let files = document.getElementById('fileselect').value;
-    let formData = new FormData(this);
-    console.log(files);
-
-    
-
-    console.log(files);
-} 
