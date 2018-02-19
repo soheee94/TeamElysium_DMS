@@ -105,106 +105,120 @@
 
     <!-- Document Enrollment  Modal -->
     <div class="modal fade" id="documentEnrollmentModal" tabindex="-1" role="dialog" aria-labelledby="documentEnrollmentModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="documentEnrollmentModalLabel">문서 등록</h5>
+                    <h5 class="modal-title" id="documentEnrollmentModalLabel">File Upload</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
                 </div>
 
                 <div class="modal-body">
-                    <div class="row">
-                        <select class="custom-select col-md-4" id="selectC1" onchange="getselectC2()">
-						  <option disabled selected value> -- </option>
-						</select>
-                        <select class="custom-select col-md-4" id="selectC2" onchange="getselectC3()">
-						  <option disabled selected value> -- </option>
-						</select>
-                        <select class="custom-select col-md-4" id="selectC3">
-						  <option disabled selected value> -- </option>
-						</select>
+                    <div class="row fileselect">
+                        <div class="input-group mb-3 col-md-4">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="selectC1">1</label>
+                            </div>
+                            <select class="custom-select " id="selectC1" onchange="getselectC2()">
+                                <option disabled selected value> -- </option>
+                            </select>
+                        </div>
+
+                        <div class="input-group mb-3 col-md-4">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="selectC2">2</label>
+                            </div>
+                            <select class="custom-select " id="selectC2" onchange="getselectC3()">
+                                <option disabled selected value> -- </option>
+                            </select>
+                        </div>
+
+                        <div class="input-group mb-3 col-md-4">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="selectC3">3</label>
+                            </div>
+                            <select class="custom-select " id="selectC3">
+                                <option disabled selected value> -- </option>
+                            </select>
+                        </div>
                     </div>
 
+
                     <form id="upload" method="POST" enctype="multipart/form-data">
-                        <fieldset>
-                            <input type="hidden" id="MAX_FILE_SIZE" name="file" value="300000" />
+                        <input type="hidden" id="MAX_FILE_SIZE" name="file" value="300000" />
 
-                            <div>
-                                <!-- 					<div id="filedrag"><i class="fas fa-upload"></i>  Drop files here or <label for="fileselect">Browse</label>
-					<input type="file" name="file[]" id="fileselect" style="display : none;" data-multiple-caption="{count} files selected" multiple="multiple">
-					</div> -->
-
-                                <label for="fileselect">Browse</label>
-
-                                <input type="file" name="file[]" id="fileselect" style="display : none;" data-multiple-caption="{count} files selected" multiple="multiple">
-
-                                <div id="messages">
-                                    <div id="downloads">
-                                        <div class="download">
-                                            <!-- File Icon -->
-                                            <svg class="ico-file" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M447.9 129.7c-0.1-3-1.3-5.9-3.5-8.1L326.4 3.5c0 0 0 0 0 0C324.2 1.3 321.2 0 317.9 0H89.3C75.4 0 64 11.3 64 25.2v461.5c0 13.9 11.3 25.2 25.2 25.2h333.4c13.9 0 25.2-11.3 25.2-25.2v-356.7C448 129.9 447.9 129.8 447.9 129.7zM329.9 40.9l77.1 77.1h-72.1c-2.8 0-5.1-2.3-5.1-5.1V40.9zM424 486.8c0 0.7-0.6 1.3-1.3 1.3H89.3c-0.7 0-1.3-0.6-1.3-1.3V25.2c0-0.7 0.6-1.3 1.3-1.3h216.6v89c0 16 13 29 29 29h89V486.8z"/></svg>
-
-                                            <div class="dl-content">
-                                                <p>Daily UI Day031.sketch</p>
-                                                <div class="progress-wrap">
-                                                    <div class="uploadprogress"></div>
-                                                </div>
-                                                <span class="percent">100%</span>
-
-                                            </div>
-                                            <!-- /.dl-content -->
-                                        </div>
-
-                                        <!-- /.download -->
-                                        <div class="download">
-                                            <!-- File Icon -->
-                                            <svg class="ico-file" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M447.9 129.7c-0.1-3-1.3-5.9-3.5-8.1L326.4 3.5c0 0 0 0 0 0C324.2 1.3 321.2 0 317.9 0H89.3C75.4 0 64 11.3 64 25.2v461.5c0 13.9 11.3 25.2 25.2 25.2h333.4c13.9 0 25.2-11.3 25.2-25.2v-356.7C448 129.9 447.9 129.8 447.9 129.7zM329.9 40.9l77.1 77.1h-72.1c-2.8 0-5.1-2.3-5.1-5.1V40.9zM424 486.8c0 0.7-0.6 1.3-1.3 1.3H89.3c-0.7 0-1.3-0.6-1.3-1.3V25.2c0-0.7 0.6-1.3 1.3-1.3h216.6v89c0 16 13 29 29 29h89V486.8z"/></svg>
-                                            <div class="dl-content">
-                                                <p>Daily UI Day031.sketch</p>
-                                                <div class="progress-wrap">
-                                                    <div class="uploadprogress" style="width: 100px;"></div>
-                                                </div>
-                                                <span class="percent">73%</span>
-
-                                            </div>
-                                            <!-- /.dl-content -->
-
-
-                                        </div>
-                                        <!-- /.download -->
-                                        <div class="download">
-
-                                            <!-- File Icon -->
-                                            <svg class="ico-file" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M447.9 129.7c-0.1-3-1.3-5.9-3.5-8.1L326.4 3.5c0 0 0 0 0 0C324.2 1.3 321.2 0 317.9 0H89.3C75.4 0 64 11.3 64 25.2v461.5c0 13.9 11.3 25.2 25.2 25.2h333.4c13.9 0 25.2-11.3 25.2-25.2v-356.7C448 129.9 447.9 129.8 447.9 129.7zM329.9 40.9l77.1 77.1h-72.1c-2.8 0-5.1-2.3-5.1-5.1V40.9zM424 486.8c0 0.7-0.6 1.3-1.3 1.3H89.3c-0.7 0-1.3-0.6-1.3-1.3V25.2c0-0.7 0.6-1.3 1.3-1.3h216.6v89c0 16 13 29 29 29h89V486.8z"/></svg>
-                                            <div class="dl-content">
-                                                <p>Daily UI Day031.sketch</p>
-                                                <div class="progress-wrap">
-                                                    <div class="uploadprogress" style="width: 60px;"></div>
-                                                </div>
-                                                <span class="percent">40%</span>
-
-                                            </div>
-                                            <!-- /.dl-content -->
-
-                                        </div>
-                                        <!-- /.download -->
+                        <div class="row fileupload-wrapper">
+                           <div id="fileupload" class="col-md-5">
+                                <div id="filedrag">
+                                    <div>
+                                        <i class="fas fa-arrow-up fa-5x" data-fa-transform="shrink-10" data-fa-mask="fa fa-file"></i>
+                                        <br/><br/>
+                                        Drag and Drop files here
+                                        <br/>or<br/>
+                                        <label for="fileselect" class="btn btn-primary" id="browse">Browse</label>
+                                        <input type="file" name="file[]" id="fileselect" style="display : none;" data-multiple-caption="{count} files selected" multiple="multiple">
                                     </div>
-                                    <!-- /.downloads -->
+                                    
                                 </div>
                             </div>
 
-                            <div id="bottom">
-                                <button type="submit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 489.4 489.4"><path d="M382.4 422.75H277.4v-106.1h34.7c8.8 0 14-10 8.8-17.2l-67.5-93.4c-4.3-6-13.2-6-17.5 0l-67.5 93.4c-5.2 7.2-.1 17.2 8.8 17.2h34.7v106.1H94.3c-52.5-2.9-94.3-52-94.3-105.2 0-36.7 19.9-68.7 49.4-86-2.7-7.3-4.1-15.1-4.1-23.3 0-37.5 30.3-67.8 67.8-67.8 8.1 0 15.9 1.4 23.2 4.1 21.7-46 68.5-77.9 122.9-77.9 70.4.1 128.4 54 135 122.7 54.1 9.3 95.2 59.4 95.2 116.1 0 60.6-47.2 113.1-107 117.3z"/></svg>Upload</button>
-                            </div>
+                            <div id="filelist" class="col-md-7">
+                                <ul id="filelistul">                                    
+<!--                                     <li class="row">
+                                        <div class="col-md-2">
+                                             <i class="far fa-circle fa-2x" style="margin-top: 8px;"></i>
+                                             <span class="fa-layers-text fa-inverse" data-fa-transform="left-2 down-1" style="font-weight:900; color:#555;">1</span>
+                                        </div>                                        
+                                        <div class="col-md-8">
+                                            <p class="filename">sponsor-package.pdf</p>
+                                            <p class="filesize">1.34 MB</p>                                         
+                                        </div>
+                                        <div class="col-md-2">
+                                            <i class="fas fa-spinner fa-pulse" style="margin-top: 8px;"></i>
+                                        </div> 
+                                    </li>
 
-                        </fieldset>
+                                    <li class="row">
+                                        <div class="col-md-2 danger">
+                                           <i class="far fa-circle fa-2x" style="margin-top: 8px;"></i>
+                                             <span class="fa-layers-text fa-inverse" data-fa-transform="left-2 down-1" style="font-weight:900; color:#dc3545;">2</span>
+                                        </div>                                        
+                                        <div class="col-md-8">
+                                            <p class="filename danger">sponsor-package.pdf</p>
+                                            <p class="filesize">1.34 MB</p>                                         
+                                        </div>
+                                        <div class="col-md-2 danger">
+                                            <i class="fas fa-times" style="margin-top: 8px;"></i>
+                                        </div> 
+                                    </li>
+
+                                    <li class="row">
+                                        <div class="col-md-2 success">
+                                            <i class="far fa-circle fa-2x" style="margin-top: 8px;"></i>
+                                             <span class="fa-layers-text fa-inverse" data-fa-transform="left-2 down-1" style="font-weight:900; color:#0069d9;">3</span>
+                                        </div>                                        
+                                        <div class="col-md-8">
+                                            <p class="filename success">sponsor-package.pdf</p>
+                                            <p class="filesize">1.34 MB</p>                                         
+                                        </div>
+                                        <div class="col-md-2 success">
+                                            <i class="fas fa-check" style="margin-top: 8px;"></i>
+                                        </div>  
+                                    </li> -->
+                               </ul>
+                                
+                            </div> 
+                        </div>                        
+
+                        <div id="bottom">
+                            <button type="submit" class="btn btn-warning">Upload</button>
+                        </div>
                     </form>
-                </div>
 
-            </div>
-        </div>
+                </div><!--/modal-body-->
+            </div><!--/modal-content-->
+        </div><!--/modal-dialog-->
     </div>
     <!-- /Document Enrollment Modal -->
 
@@ -219,8 +233,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <!-- FontAwesome CDN -->
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-
-
+<!--jquery ui-->
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <!-- Custom JS -->
 <script>
     document.write("<script type='text/javascript' src='./js/index.js?version=" + Date.now() + "'><\/script>");

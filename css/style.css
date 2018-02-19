@@ -5,6 +5,9 @@ main color : #222e38;
 point color : #eb5244;
 border : #b3b3b3;
 
+primary : #0069d9;
+danger : #dc3545;
+
 */
 
 /*------------------------------------*\
@@ -149,17 +152,45 @@ ol > li.selection:before {
 /*------------------------------------*\
   Document Enrollment  Modal
 \*------------------------------------*/
+#documentEnrollmentModal .modal-body{
+  padding: 0;
+}
+
+.fileselect{
+  padding: 1rem;
+}
+
+.fileupload-wrapper{
+  height: 60vh;
+  padding: 1rem;
+}
+
+#fileupload{
+  border-right: 2px dashed #555;
+}
+
+#browse{
+  margin-top: 5px;
+  width: 200px;
+  font-weight: bold;
+  color: white;
+}
+
 #filedrag
 {
-  display: none;
   font-weight: bold;
   text-align: center;
-  padding: 1em 0;
   margin: 1em 0;
   color: #555;
-  border: 2px dashed #555;
-  border-radius: 7px;
   cursor: default;
+  height: 90%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+#filedrag div{
+  align-self: center;
 }
 
 #filedrag.hover
@@ -170,124 +201,57 @@ ol > li.selection:before {
   box-shadow: inset 0 3px 4px #888;
 }
 
+#filelist{
+  overflow-y: scroll;
+}
+
+#filelist ul{
+  list-style: none;
+  padding: 0;
+  margin: 1em 1.5em;
+}
+
+#filelist li{
+  margin-bottom: 2em;
+}
+
+#filelist ul p{
+  margin: 0;
+}
+
+.filename{
+  font-weight: bold;
+}
+
+.filesize{
+  color: #c1c1c1;
+  font-size: 0.8em;
+}
+
+.danger{
+  color : #dc3545;
+}
+
+.success{
+  color : #0069d9;
+}
+
+#bottom{
+  background-color: #ededed;
+  text-align: right;
+}
+
+#bottom button{
+  margin: 20px 20px 20px 0;
+  width: 150px;
+  font-weight: bold;
+  color: white;
+}
+
 label[for="fileselect"]
 {
   cursor: pointer;
   color : #0079c1;
-}
-
-label[for="fileselect"]:hover
-{
-  text-decoration: underline;
-}
-
-
-/* Credits: https://dribbble.com/shots/3366573-Daily-UI-Day31-File-upload */
-
-html, button {
-  font-family: 'Roboto Light', sans-serif;
-}
-
-
-.uploadcontainer {
-  text-align: center;
-  margin: auto;
-}
-
-svg {
-     box-sizing: content-box; 
-}
-
-
-.download {
-  text-align: center;
-  display: inline-block;
-  width: 85%
-}
-
-.dl-content {
-  height: 20px;
-  width: 40%;
-  margin-bottom: 25px;
-}
-
-.download > .dl-content > p {
-  color: #222e38;
-  display: inline-block;
-  font-size: 11px;
-}
-
-.ico-file {
-  height: 17px;
-  fill: #222e38;
-  float: left;
-  margin-top: 3px;
-  padding: 10px;
-  padding-right: 0px;
-  display: block;
-}
-
-.progress-wrap, .progress {
-  height: 2px;
-}
-
-.progress-wrap {
-  width: 150px;
-  background-color: #3A3C4B;
-  margin-left: 40px;
-  margin-top: -5px;
-}
-
-.uploadprogress {
-  width: 150px;
-  background-color: #6B75A6;
-}
-
-.percent {
-  color: #6B75A6;
-  float: right;
-  position: absolute;
-  margin-top: -6px;
-  margin-left: 98px;
-  font-size: 9px;
-}
-
-#bottom {
-  box-sizing: border-box;
-  margin: 15px 0;
-  background-color: #2F3042;
-  width: 100%;
-}
-
-#bottom button {
-  border: 1px dashed rgba(128, 128, 128, 0.4);
-  height: 75px;
-  color: #f1f1f1;
-  background-color: #2f3042;
-  width: 100%;
-  transition: background-color, 0.3s, ease-in-out;
-}
-
-#bottom button:hover {
-  background-color: #333447;
-  color: white;
-}
-
-#bottom button:hover svg {
-  opacity: 1;
-}
-
-#bottom button:focus {
-  outline: 0;
-}
-
-#bottom button > svg {
-  width: 25px;
-  vertical-align: middle;
-  margin-right: 8px;
-  opacity: 0.7;
-  fill: white;
-  transition: opacity, 0.3s, ease-in-out;
 }
 
 /*------------------------------------*\
