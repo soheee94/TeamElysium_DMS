@@ -19,6 +19,10 @@ danger : #dc3545;
 	overflow-x: hidden;
 }*/
 
+ul{
+  list-style: none;
+}
+
 /*------------------------------------*\
   /Common
 \*------------------------------------*/
@@ -253,7 +257,6 @@ ol > li.selection:before {
 }
 
 #filelist ul{
-  list-style: none;
   padding: 0;
   margin: 1em 1.5em;
 
@@ -319,4 +322,44 @@ label[for="fileselect"]
 
 /*------------------------------------*\
   /Document Enrollment  Modal
+\*------------------------------------*/
+
+/*------------------------------------*\
+  Version Management  Modal
+\*------------------------------------*/
+#versionList{
+  font-size: 0.8em;
+}
+
+#versionList ul{
+  padding: 0 1.3rem;
+}
+
+#versionList li{
+  margin-bottom: 1.7rem;
+}
+
+#versionList li:last-of-type{
+  margin-bottom: 0rem;
+}
+
+#versionList p{
+  margin-bottom: 2px;
+}
+
+.versionFileName, .versionRegistrant{
+  color: #727272;
+}
+
+.versionRegistrant{
+  font-size: 0.8em;
+}
+
+.fawrapper{
+  display: flex;
+  justify-content: center;
+}
+
+/*------------------------------------*\
+  /Version Management  Modal
 \*------------------------------------*/

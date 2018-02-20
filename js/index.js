@@ -418,8 +418,8 @@ let convertFileSize = x => {
   return (x / Math.pow(1024, e)).toFixed(2) + " " + s[e];
 };
 
-let versionManagementOpen = () => {
-    
+let versionManagementOpen = id => {
+    $("#versionManagementModal").modal();
 }
 
 
@@ -609,8 +609,7 @@ function clickInsideElement( e, className ) {
    * @param {HTMLElement} link The link that was clicked
    */
   function menuItemListener( link ) {
-    console.log( "Task ID - " + taskItemInContext.getAttribute("id") + ", Task action - " + link.getAttribute("data-action"));
-    $("#versionManagementModal").modal();
+    versionManagementOpen(taskItemInContext.getAttribute("id"));
     toggleMenuOff();
   }
 
