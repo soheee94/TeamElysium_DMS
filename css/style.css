@@ -209,6 +209,7 @@ ol > li.selection:before {
   list-style: none;
   padding: 0;
   margin: 1em 1.5em;
+
 }
 
 #filelist li{
@@ -234,6 +235,10 @@ ol > li.selection:before {
 
 .success{
   color : #0069d9;
+}
+
+.primary{
+  color: #555;
 }
 
 #bottom{

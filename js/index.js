@@ -253,9 +253,8 @@ $("#upload").submit(function(e) {
     if(c3code !== "" && filecnt !== 0){
         formData.append('c3_code', c3code);
 
-        //TODO : li -> status -> i = spinner
         let status = document.createElement("i");
-        status.setAttribute("class", "fas fa-spinner fa-pulse");
+        status.setAttribute("class", "fas fa-spinner fa-pulse statusicon");
         status.style["margin-top"] = "8px";
 
         $(".status").append(status);
@@ -267,14 +266,23 @@ $("#upload").submit(function(e) {
             success: function (data) {
                 let dataStatus = data.split("\n");
                 for(let i=0; i<dataStatus.length-1; i++){
+                    let status = document.createElement("i");
+
                     if (dataStatus[i] === "존재하는 이름입니다.") {
-                        $("#fileindex"+i).addClass("danger");
-                        $("#fileindex"+i+" .status i").switchClass("fas fa-spinner fa-pulse", "fas fa-times", 1000, "easeInOutQuad");
+                        $("#fileindex"+i).switchClass("primary", "danger"); 
+                        status.setAttribute("class", "fas fa-times statusicon");                      
                     }
+
+                    else{
+                        $("#fileindex"+i).switchClass("primary", "success");
+                        status.setAttribute("class", "fas fa-check statusicon");
+                    }
+
+                    status.style["margin-top"] = "8px";  
+                    $("#fileindex"+i+" .statusicon").remove();
+                    $("#fileindex"+i+" .status").append(status);
                 }
-
-                //TODO : data에 따라 check / times i 추가
-
+                
                 return false;
             },
             cache: false,
@@ -352,7 +360,7 @@ let ParseFile = (file, index) => {
     let filelist = $id("filelistul");
 
     let li = document.createElement("li");
-    li.setAttribute("class", "row");
+    li.setAttribute("class", "row primary");
     li.setAttribute("id", "fileindex"+index);
 
     let div1 = document.createElement("div");
@@ -363,10 +371,9 @@ let ParseFile = (file, index) => {
     circle.style["margin-top"] = "8px";
 
     let circlenumber = document.createElement("span");
-    circlenumber.setAttribute("class", "fa-layers-text fa-inverse");
+    circlenumber.setAttribute("class", "fa-layers-text");
     circlenumber.setAttribute("data-fa-transform", "left-2 down-1");
     circlenumber.style["font-weight"] = "900";
-    circlenumber.style["color"] = "#555";
     circlenumber.textContent = filelist.getElementsByTagName("li").length + 1;
 
     div1.appendChild(circle);
