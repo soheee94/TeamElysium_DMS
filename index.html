@@ -11,7 +11,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>DMS</title>
-
     <!-- Custom CSS -->
     <script>
         document.write("<link href='./css/style.css?version=" + Date.now() + "' rel='stylesheet'");
@@ -94,6 +93,8 @@
                         <p>문서목록</p>
                     </div>
                     <ol id="documentList">
+
+
                     </ol>
                 </div>
             </div>
@@ -102,6 +103,16 @@
         <!-- /Category(miller columns) -->
     </content>
     <!-- /content -->
+
+    <!-- Context Menu -->
+    <nav id="context-menu" class="context-menu">
+        <ul class="context-menu__items">
+          <li class="context-menu__item">
+            <a href="#" class="context-menu__link" data-action="View"><i class="far fa-clock"></i>&nbsp;&nbsp;버전 관리</a>
+          </li>
+        </ul>
+    </nav>
+    <!-- /Context Menu -->
 
     <!-- Document Enrollment  Modal -->
     <div class="modal fade" id="documentEnrollmentModal" tabindex="-1" role="dialog" aria-labelledby="documentEnrollmentModalLabel" aria-hidden="true">
@@ -145,7 +156,7 @@
                     </div>
 
 
-                    <form id="upload" method="POST" enctype="multipart/form-data">
+                    <form id="upload" method="POST" class="form-group" enctype="multipart/form-data">
                         <input type="hidden" id="MAX_FILE_SIZE" name="file" value="300000" />
 
                         <div class="row fileupload-wrapper">
@@ -165,7 +176,7 @@
 
                             <div id="filelist" class="col-md-7">
                                 <ul id="filelistul">                                    
-<!--                                     <li class="row">
+        <!--                             <li class="row">
                                         <div class="col-md-2">
                                              <i class="far fa-circle fa-2x" style="margin-top: 8px;"></i>
                                              <span class="fa-layers-text fa-inverse" data-fa-transform="left-2 down-1" style="font-weight:900; color:#555;">1</span>
@@ -179,7 +190,7 @@
                                         </div> 
                                     </li>
 
-                                    <li class="row">
+                                    <li class="row danger">
                                         <div class="col-md-2 danger">
                                            <i class="far fa-circle fa-2x" style="margin-top: 8px;"></i>
                                              <span class="fa-layers-text fa-inverse" data-fa-transform="left-2 down-1" style="font-weight:900; color:#dc3545;">2</span>
@@ -190,7 +201,11 @@
                                         </div>
                                         <div class="col-md-2 danger">
                                             <i class="fas fa-times" style="margin-top: 8px;"></i>
-                                        </div> 
+                                        </div>
+
+                                        <div class="feedback">
+                                            이미 존재하는 문서이름 입니다.
+                                        </div>
                                     </li>
 
                                     <li class="row">
@@ -223,7 +238,28 @@
     <!-- /Document Enrollment Modal -->
 
     <!-- Version Management Modal -->
+    <div class="modal fade" id="versionManagementModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">버전 관리</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <button class="btn">새 버전 업로드</button>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- /Version Management Modal -->
+
+
 </body>
 
 <!-- jQuery CDN -->
