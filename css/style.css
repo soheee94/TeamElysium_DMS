@@ -365,6 +365,7 @@ label[for="fileselect"]
   font-size: 0.9em;
   text-align: center !important;
   color: #555 !important;
+  cursor: pointer;
 }
 
 .dropdown{
@@ -376,6 +377,11 @@ label[for="fileselect"]
   color: #555;
   background-color: #e2e2e2;
   border-radius: 50px;
+}
+
+#versionListUl{
+  max-height: 45vh;
+  overflow-y: scroll;
 }
 
 /*------------------------------------*\

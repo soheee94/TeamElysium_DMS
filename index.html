@@ -250,7 +250,12 @@
             </button>
           </div>
           <div class="modal-body">
-            <button class="btn">새 버전 업로드</button>
+            <form id="newVersionUploadForm"  method="POST" enctype="multipart/form-data">
+                <input type="hidden" id="MAX_FILE_SIZE" name="file" value="300000" />
+                <label for="newVersionUpload" class="btn btn-primary">새 버전 업로드</label>
+                <input type="file" name="file" id="newVersionUpload" style="display : none;" >
+            </form>
+            
             <hr>
             <div id="versionList">
                 <ul id="versionListUl">

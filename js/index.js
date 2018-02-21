@@ -346,7 +346,6 @@ function FileDragHover(e) {
 
 // file selection
 function FileSelectHandler(e) {
-
     // cancel event and hover styling
     FileDragHover(e);
 
@@ -423,6 +422,7 @@ let versionManagementOpen = id => {
 
 let getDocumentVersionList = id => {
     let versionList = document.getElementById("versionListUl");
+    versionList.setAttribute("data-id", id);
     $("#versionListUl").empty();
     let data = {code : id};
     
@@ -496,7 +496,8 @@ let getDocumentVersionList = id => {
 
                 let dropdownitem = document.createElement("a");
                 dropdownitem.setAttribute("class", "dropdown-item");
-                dropdownitem.setAttribute("href", "#");
+                dropdownitem.setAttribute("id", value.file);
+                dropdownitem.setAttribute("onClick", "downloadDocument(this.id)");
 
                 let fadownload = document.createElement("i");
                 fadownload.setAttribute("class", "fas fa-download");
@@ -522,6 +523,30 @@ let getDocumentVersionList = id => {
         },
     });  
 }
+
+$( "#newVersionUpload" ).change(function() {
+    let newVersionUploadForm = document.getElementById("newVersionUploadForm");
+    let newVersionUploadData = new FormData(newVersionUploadForm);
+    
+    let document_code = document.getElementById("versionListUl").getAttribute("data-id");
+    newVersionUploadData.append('document_code', document_code);
+    newVersionUploadData.append('registrant', '한소희');
+
+    let c3code = document.getElementById(document_code).getAttribute("data-c3code");
+
+    $.ajax({
+            url: 'http://igrus.mireene.com/php/dms_php/newVersionUpload.php',
+            type: 'POST',
+            data: newVersionUploadData,
+            success: function (data) {
+                getDocumentVersionList(document_code);
+                getDocumentList(c3code);
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });  
+});
 
 
 ////////////////////////////////////

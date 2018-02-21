@@ -15,7 +15,7 @@ $code = $_POST['code'];
 
 $return_arr = Array();
 
-$result = mysqli_query($connection,"SELECT * FROM `dms_documentVersion` WHERE `document_code` = '".$code."'");
+$result = mysqli_query($connection,"SELECT * FROM `dms_documentVersion` WHERE `document_code` = '".$code."' ORDER BY `version`");
 
 while ($row = mysqli_fetch_array($result)) {
 	$row_array['registrant'] = $row['registrant'];
