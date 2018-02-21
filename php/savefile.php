@@ -15,6 +15,7 @@
 	include '../include/Config.php';
 	$connection = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_DATABASE);
 	$c3_code = $_POST['c3_code'];
+	$registrant = $_POST['registrant'];
 
     //multiFile array seperation
     function reArrayFiles(&$file_post) {
@@ -70,6 +71,7 @@
 					$result = mysqli_query($connection, "INSERT INTO `dms_document`(`code`, `c3_code`, `name`, `filename`) VALUES ('".$code[0]."','".$c3_code."','".$documentname."','".$filenamedb."')");
 
 					if($result){
+						mysqli_query($connection,"INSERT INTO `dms_documentVersion`(`code`, `document_code`, `registrant`, `version`, `file`, `date`) VALUES ('".$dbfilename[0]."','".$code[0]."','".$registrant."','0','".$filenamedb."', now())");
 						echo "successfully uploaded $filename\n";
 					}
 				}

@@ -352,8 +352,9 @@ label[for="fileselect"]
   color: #727272;
 }
 
-.versionRegistrant{
+.versionRegistrant, .versionDate{
   font-size: 0.8em;
+  margin-right: 5px;
 }
 
 .fawrapper{

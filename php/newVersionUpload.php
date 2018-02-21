@@ -41,7 +41,7 @@
 
 	// upload a file
 	if (ftp_put($conn_id, $remote_file, $tmp_file, FTP_BINARY)) {
-		$result = mysqli_query($connection,"INSERT INTO `dms_documentVersion`(`code`, `document_code`, `registrant`, `version`, `file`) VALUES ('".$dbfilename[0]."','".$document_code."','".$registrant."','0','".$filename."')");
+		$result = mysqli_query($connection,"INSERT INTO `dms_documentVersion`(`code`, `document_code`, `registrant`, `version`, `file`, `date`) VALUES ('".$dbfilename[0]."','".$document_code."','".$registrant."','0','".$filename."', now())");
 
 		if($result){
 			mysqli_query($connection, "UPDATE `dms_documentVersion` SET `version`= IF(`code` != '".$dbfilename[0]."', `version`+1 , `version`) WHERE `document_code` = '".$document_code."'");

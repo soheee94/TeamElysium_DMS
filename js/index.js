@@ -252,6 +252,7 @@ $("#upload").submit(function(e) {
 
     if(c3code !== "" && filecnt !== 0){
         formData.append('c3_code', c3code);
+        formData.append('registrant', '한소희');
 
         let status = document.createElement("i");
         status.setAttribute("class", "fas fa-spinner fa-pulse statusicon");
@@ -471,11 +472,19 @@ let getDocumentVersionList = id => {
                 filewrapper.appendChild(versionFileName);
                 div2.appendChild(filewrapper);
 
-                let versionRegistrant = document.createElement("p");
+                let infoWrapper = document.createElement("p");
+
+                let versionDate = document.createElement("span");
+                versionDate.setAttribute("class", "versionDate");
+                versionDate.textContent = value.date;
+
+                let versionRegistrant = document.createElement("span");
                 versionRegistrant.setAttribute("class", "versionRegistrant");
                 versionRegistrant.textContent = value.registrant;
 
-                div2.appendChild(versionRegistrant);
+                infoWrapper.appendChild(versionDate);
+                infoWrapper.appendChild(versionRegistrant);
+                div2.appendChild(infoWrapper);
 
                 let div3 = document.createElement("div");
                 div3.setAttribute("class", "col-md-1 fawrapper dropdown");

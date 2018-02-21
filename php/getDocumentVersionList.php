@@ -24,6 +24,7 @@ while ($row = mysqli_fetch_array($result)) {
 	$row_array['encodefilename'] = $row['file'];
 	$row_array['document_code'] = $code;
 	$row_array['version'] =  $row['version'];
+	$row_array['date'] =  $row['date'];
 	
 	array_push($return_arr,$row_array);
 }
