@@ -417,7 +417,110 @@ let convertFileSize = x => {
 };
 
 let versionManagementOpen = id => {
+    getDocumentVersionList(id);
     $("#versionManagementModal").modal();
+}
+
+let getDocumentVersionList = id => {
+    let versionList = document.getElementById("versionListUl");
+    $("#versionListUl").empty();
+    let data = {code : id};
+    
+     $.ajax({
+        url: 'http://igrus.mireene.com/php/dms_php/getDocumentVersionList.php',
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        success: function(data) {
+            
+            for(let value of data){
+                let li = document.createElement("li");
+                li.setAttribute("class", "row");
+
+                let div1 = document.createElement("div");
+                div1.setAttribute("class", "col-md-1 fawrapper");
+
+                let fileicon = document.createElement("i");
+                fileicon.setAttribute("class", "fas fa-file");
+                fileicon.style["color"] = "#0069d9";
+                fileicon.style["align-self"] = "center";
+
+                div1.appendChild(fileicon);
+
+                let div2 = document.createElement("div");
+                div2.setAttribute("class", "col-md-10");
+
+                let filewrapper = document.createElement("p");
+                
+                let versionName = document.createElement("span");
+                let versionText = "";
+                if(value.version === "0"){
+                    versionText = "현재 버전";
+                }
+                else{
+                    versionText = "버전 " + value.version;
+                }
+                versionName.textContent = versionText;
+                versionName.style["margin-right"] = "8px";
+
+                let versionFileName = document.createElement("span");
+                versionFileName.setAttribute("class", "versionFileName");
+                versionFileName.textContent = value.encodefilename;
+
+                filewrapper.appendChild(versionName);
+                filewrapper.appendChild(versionFileName);
+                div2.appendChild(filewrapper);
+
+                let versionRegistrant = document.createElement("p");
+                versionRegistrant.setAttribute("class", "versionRegistrant");
+                versionRegistrant.textContent = value.registrant;
+
+                div2.appendChild(versionRegistrant);
+
+                let div3 = document.createElement("div");
+                div3.setAttribute("class", "col-md-1 fawrapper dropdown");
+                div3.setAttribute("id", "dropdownMenuButton");
+                div3.setAttribute("data-toggle", "dropdown");
+                div3.setAttribute("aria-haspopup", "true");
+                div3.setAttribute("aria-expanded", "false");
+
+                let downloadbtn = document.createElement("i");
+                downloadbtn.setAttribute("class", "fas fa-ellipsis-v");
+                downloadbtn.style["align-self"] = "center";
+
+                div3.appendChild(downloadbtn);
+
+                let dropdown = document.createElement("div");
+                dropdown.setAttribute("class", "dropdown-menu");
+                dropdown.setAttribute("aria-labelledby", "dropdownMenuButton");
+
+                let dropdownitem = document.createElement("a");
+                dropdownitem.setAttribute("class", "dropdown-item");
+                dropdownitem.setAttribute("href", "#");
+
+                let fadownload = document.createElement("i");
+                fadownload.setAttribute("class", "fas fa-download");
+
+                let textdownload = document.createElement("span");
+                textdownload.textContent = "다운로드";
+                textdownload.style["margin-left"] = "10px";
+
+                dropdownitem.appendChild(fadownload);
+                dropdownitem.appendChild(textdownload);
+                dropdown.appendChild(dropdownitem);
+
+                li.appendChild(div1);
+                li.appendChild(div2);
+                li.appendChild(div3);
+                li.appendChild(dropdown);
+
+                versionList.appendChild(li);
+            }
+        },
+        error: function(request, status, error) {
+            console.log(request, status, error);
+        },
+    });  
 }
 
 
