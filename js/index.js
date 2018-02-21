@@ -1,9 +1,7 @@
 "use strict"
 
-window.onload = () => {
-	
+window.onload = () => {	
 	getCategory1();
-
 }
 
 let getCategory1 = () => {
@@ -426,6 +424,7 @@ let versionManagementOpen = id => {
 ////////////////////////////////////
 ///context menu/////////////////////
 ////////////////////////////////////
+
 function clickInsideElement( e, className ) {
     var el = e.srcElement || e.target;
     

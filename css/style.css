@@ -327,6 +327,7 @@ label[for="fileselect"]
 /*------------------------------------*\
   Version Management  Modal
 \*------------------------------------*/
+
 #versionList{
   font-size: 0.8em;
 }
@@ -358,6 +359,23 @@ label[for="fileselect"]
 .fawrapper{
   display: flex;
   justify-content: center;
+}
+
+.dropdown-item{
+  font-size: 0.9em;
+  text-align: center !important;
+  color: #555 !important;
+}
+
+.dropdown{
+  cursor: pointer;
+  color: #727272;
+}
+
+.dropdown:hover{
+  color: #555;
+  background-color: #e2e2e2;
+  border-radius: 50px;
 }
 
 /*------------------------------------*\
