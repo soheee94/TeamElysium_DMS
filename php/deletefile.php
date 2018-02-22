@@ -21,8 +21,6 @@ $filename = iconv('UTF-8', 'EUC-KR', $_POST['filename']);
 $file = '/html/medical_document/'.$filename;
 $code = $_POST['code'];
 
-echo $filename;
-
 //ftp login info
 $ftp_server = "igrus.mireene.com";  
 $ftp_user_name = "igrus";  
@@ -38,6 +36,18 @@ $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
 if (ftp_delete($conn_id, $file)) {
 	$result = mysqli_query($connection, "DELETE FROM `dms_document` WHERE `code` = '".$code."'");
 	if($result){
+		//version file delete
+		$versionFileSelect = mysqli_query($connection,"SELECT `file` FROM `dms_documentVersion` WHERE `document_code` = '".$code."'");
+
+		while ($row = mysqli_fetch_array($versionFileSelect)) {
+			$file = '/html/medical_document/'.iconv('UTF-8', 'EUC-KR', $row['file']);
+			if(ftp_delete($conn_id, $file)){
+				echo "version delete";
+			}
+		}
+		
+		//version DB delete
+		mysqli_query($connection, "DELETE FROM `dms_documentVersion` WHERE `document_code` = '".$code."'");
 		echo "deleted successful\n";
 	}
 	else{
