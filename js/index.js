@@ -4,7 +4,32 @@ window.onload = () => {
 	getCategory1();
 }
 
+jQuery(document).ready(function(){
+    let accordionsMenu = $('.cd-accordion-menu');
+
+    if( accordionsMenu.length > 0 ) {
+        
+        accordionsMenu.each(function(){
+            let accordion = $(this);
+            //detect change in the input[type="checkbox"] value
+            accordion.on('change', 'input[type="checkbox"]', function(){
+                let checkbox = $(this);
+                ( checkbox.prop('checked') ) ? checkbox.siblings('ul').attr('style', 'display:none;').slideDown(300) : checkbox.siblings('ul').attr('style', 'display:block;').slideUp(300);
+            });
+        });
+    } 
+  
+  // $( ".menu-button" ).click(function() {
+  //   $('.sidebar').toggleClass('sidebar-close');
+  //   $('.content').toggleClass('content_full-width');
+  //   $('.menu-icon').toggleClass('click-rotate');
+  // });
+});
+
 let getCategory1 = () => {
+    let category = document.getElementById("category");
+
+
 	let category1 = document.getElementById("category1");
     let selectC1 = document.getElementById("selectC1");
 
@@ -14,19 +39,31 @@ let getCategory1 = () => {
         dataType: 'json',
         success: function(data) {
         	for(let value of data){
-        		let list = document.createElement("li");
-        		list.setAttribute("id", value.code);
-        		list.setAttribute("onClick", "getCateogry2(this.id)");
-        		list.textContent = value.name;
+                let li = document.createElement("li");
+                li.setAttribute("class", "has-children category1");
+                li.setAttribute("id", value.code);
 
-        		category1.appendChild(list);
+                let checkbox = document.createElement("input");
+                checkbox.setAttribute("type", "checkbox");
+                checkbox.setAttribute("id", "group-"+value.code);
+                checkbox.setAttribute("name", "group-"+value.code);
 
-                let option = document.createElement("option");
-                option.textContent = value.name;
-                option.setAttribute("value", value.code);
+                let label = document.createElement("label");
+                label.setAttribute("for", "group-"+value.code);
+                label.textContent = value.name;
 
-                selectC1.appendChild(option);
+                let folder = document.createElement("i");
+                folder.setAttribute("class", "fas fa-folder");
+
+                label.prepend(folder);
+
+                li.appendChild(checkbox);
+                li.appendChild(label);
+
+                category.appendChild(li);
         	}
+
+            getCategory2();
         },
         error: function(request, status, error) {
             console.log(request, status, error);
@@ -35,32 +72,50 @@ let getCategory1 = () => {
 }
 
 
-let getCateogry2 = id => {
-	let selectCategory1 = document.getElementById(id);
-	selectCategory1.classList.add("selection");
-	$("#"+id).siblings().removeClass("selection");
-
-	let category2 = document.getElementById("category2");
-	$("#category2").empty();
-	$("#category3").empty();
-	$("#documentList").empty();
-
-	let data = {code : id};
+let getCategory2 = () => {
 
 	$.ajax({
         url: 'http://igrus.mireene.com/php/dms_php/getCategory2.php',
         type: 'POST',
-        data: data,
         dataType: 'json',
         success: function(data) {
         	for(let value of data){
-        		let list = document.createElement("li");
-        		list.setAttribute("id", value.code);
-        		list.setAttribute("onClick", "getCateogry3(this.id)");
-        		list.textContent = value.name;
+                let category1 = document.getElementById(value.c1_code);
 
-        		category2.appendChild(list);
+                let ul = document.createElement("ul");
+                ul.setAttribute("class","category2");
+
+                let li = document.createElement("li");
+                li.setAttribute("class","has-children");
+
+                let checkbox = document.createElement("input");
+                checkbox.setAttribute("type", "checkbox");
+                checkbox.setAttribute("id", "sub-group-"+value.code);
+                checkbox.setAttribute("name", "sub-group-"+value.code);
+
+                let label = document.createElement("label");
+                label.setAttribute("for", "sub-group-"+value.code);
+                label.textContent = value.name;
+
+                let folder = document.createElement("i");
+                folder.setAttribute("class", "fas fa-folder");
+
+                let category3ul = document.createElement("ul");
+                category3ul.setAttribute("id", value.code);   
+
+                label.prepend(folder);
+
+                li.appendChild(checkbox);
+                li.appendChild(label);
+                li.appendChild(category3ul);               
+
+                ul.appendChild(li);
+
+                category1.appendChild(ul);
+
         	}
+
+            getCategory3();
         },
         error: function(request, status, error) {
             console.log(request, status, error);
@@ -69,31 +124,30 @@ let getCateogry2 = id => {
 
 }
 
-let getCateogry3 = id => {
-	let selectCategory2 = document.getElementById(id);
-	selectCategory2.classList.add("selection");
-	$("#"+id).siblings().removeClass("selection");
-
-	let category3 = document.getElementById("category3");
-	$("#category3").empty();
-	$("#documentList").empty();
-	
-	let data = {code : id};
-
+let getCategory3 = () => {
 	$.ajax({
         url: 'http://igrus.mireene.com/php/dms_php/getCategory3.php',
         type: 'POST',
-        data: data,
         dataType: 'json',
         success: function(data) {
-        	for(let value of data){
-        		let list = document.createElement("li");
-        		list.setAttribute("id", value.code);
-        		list.setAttribute("onClick", "getDocumentList(this.id)");
-        		list.textContent = value.name;
+            let ul = document.createElement("ul");
+        	for(let value of data){               
+                let category2 = document.getElementById(value.c2_code);                
 
-        		category3.appendChild(list);
+                let li = document.createElement("li");
+                li.setAttribute("class","category3");
+
+                let a = document.createElement("a");
+                a.setAttribute("id",value.code);
+                a.setAttribute("onClick", "getDocumentList(this.id)");
+                a.textContent = value.name;
+
+                li.appendChild(a);
+
+                category2.appendChild(li);
         	}
+
+
         },
         error: function(request, status, error) {
             console.log(request, status, error);
@@ -103,12 +157,9 @@ let getCateogry3 = id => {
 }
 
 let getDocumentList = id => {
-	let selectCategory3 = document.getElementById(id);
-	selectCategory3.classList.add("selection");
-	$("#"+id).siblings().removeClass("selection");
 
-	let documentList = document.getElementById("documentList");
-	$("#documentList").empty();
+	let documentList = document.getElementById("tabledocumentList");
+	$("#tabledocumentList").empty();
 	
 	let data = {code : id};
 
@@ -119,23 +170,25 @@ let getDocumentList = id => {
         dataType: 'json',
         success: function(data) {
         	for(let value of data){
-        		let list = document.createElement("li");
-        		list.setAttribute("id", value.code);
-                list.setAttribute("onClick", "selectDocument(this.id)");
-                list.setAttribute("data-file", value.encodefilename);
-                list.setAttribute("data-c3code", value.c3_code);
-                list.setAttribute("class", "task");
-        		list.textContent = value.name;
+                let tr = document.createElement("tr");
+                tr.setAttribute("class", "task");
+                tr.setAttribute("id", value.code);
 
-        		let downloadbtn = document.createElement("button");
-        		downloadbtn.textContent = "다운로드";
-        		downloadbtn.setAttribute("class", "btn btn-primary btn-sm");
-        		downloadbtn.setAttribute("id", value.filename)
-        		downloadbtn.setAttribute("onClick", "downloadDocument(this.id)");
-        		downloadbtn.setAttribute("style", "float:right; height:20px; padding:0; font-size : 0.5em;")
+                let name = document.createElement("td");
+                name.textContent = value.name;
 
-        		list.appendChild(downloadbtn);
-        		documentList.appendChild(list);
+                let registrant = document.createElement("td");
+                registrant.textContent = "한소희";
+
+                let date = document.createElement("td");
+                date.textContent = "2018.02.26";
+
+                tr.appendChild(name);
+                tr.appendChild(registrant);
+                tr.appendChild(date);
+
+                documentList.appendChild(tr);
+
         	}
 
         },
@@ -301,7 +354,6 @@ $("#upload").submit(function(e) {
     else{
         alert("분류를 선택해주세요.");
     }
-
 });
 
 // drag drop upload files
@@ -739,17 +791,20 @@ function clickInsideElement( e, className ) {
     }
   }
 
-  /**
-   * Dummy action function that logs an action when a menu item link is clicked
-   * 
-   * @param {HTMLElement} link The link that was clicked
-   */
+
   function menuItemListener( link ) {
-    versionManagementOpen(taskItemInContext.getAttribute("id"));
+    let type = link.getAttribute("data-action");
+    if(type === "View"){
+       versionManagementOpen(taskItemInContext.getAttribute("id"));
+    }
+    //TODO
+    else if(type === "download"){
+        alert("다운로드");
+    }
+    else if(type ==="delete"){
+
+    }
     toggleMenuOff();
   }
 
-  /**
-   * Run the app.
-   */
   initcontextmenu();

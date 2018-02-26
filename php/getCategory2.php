@@ -11,15 +11,15 @@ header('Access-Control-Allow-Methods: GET, POST, PUT');
 
 include '../include/Config.php';
 $connection = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_DATABASE);
-$code = $_POST['code'];
 
 $return_arr = Array();
 
-$result = mysqli_query($connection,"SELECT * FROM `dms_category2` WHERE `c1_code` = '".$code."'");
+$result = mysqli_query($connection,"SELECT * FROM `dms_category2`");
 
 while ($row = mysqli_fetch_array($result)) {
 	$row_array['name'] = $row['name'];
 	$row_array['code'] = $row['code'];
+	$row_array['c1_code'] = $row['c1_code'];
 	
 	array_push($return_arr,$row_array);
 }

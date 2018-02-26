@@ -15,104 +15,106 @@
     <script>
         document.write("<link href='./css/style.css?version=" + Date.now() + "' rel='stylesheet'");
     </script>
-    <!-- Bootstrap CDN -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 </head>
 
 <body>
     <!-- header -->
     <header>
-
+        <i class="fas fa-bars fa-lg" style="color: #fff; cursor: pointer; height: 60px; margin-right: 5px;" class="menu_icon"></i>
+<!--        <h1 class="header_logo">Document Management System</h1> -->        
+        <p class="header_user">sohee.han@teamelysium.kr</p>
     </header>
     <!-- /header -->
 
     <!-- content -->
     <content>
-        <!-- top section -->
-        <section id="top">
-            <!-- Category Management -->
-            <div id="categoryManagement" class="float-left ml-15">
-                <button type="button" class="btn btn-primary">등록</button>
-                <button type="button" class="btn btn-primary">수정</button>
-                <button type="button" class="btn btn-primary">삭제</button>
+        <div class="row wrapper">
+            <div class="sidebar col-md-2">
+                <nav class="nav nav_module">
+                    <h2 class="nav_head">Module Navigation</h2>
+
+                    <ul class="cd-accordion-menu animate" id="category">
+                        <!--Sampe UI-->
+                        <!-- <li class="has-children category1">
+                          <input type="checkbox" name="group-1" id="group-1">
+                          <label for="group-1">
+                            <i class="fas fa-folder"></i>의료기기 인증
+                          </label>
+                          <ul class="category2">
+                            <li class="has-children">
+                              <input type="checkbox" name ="sub-group-1" id="sub-group-1">
+                              <label for="sub-group-1">
+                                <i class="fas fa-folder"></i>
+                                GMP 관련 문서
+                              </label>
+                              <ul>
+                                <li class="category3"><a href="#0">품질 매뉴얼</a></li>
+                                <li class="category3"><a href="#0">문서 기록 관리 규정</a></li>
+                                <li class="category3"><a href="#0">경영 검토 관리 규정</a></li>
+                                <li class="category3"><a href="#0">교육 훈련 규정</a></li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li> -->
+                    </ul>
+                </nav>            
             </div>
-            <!-- /Category Management -->
 
-            <!-- Document Management -->
-            <div id="documentManagement" class="float-right mr-15">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#documentEnrollmentModal">등록</button>
-                <button type="button" class="btn btn-primary" onclick="deleteDocument()">삭제</button>
+            <div class="col-md-10" id="content">
+                <table class="table table-hover">
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col" style="width:60%;">이름</th>
+                      <th scope="col">등록자</th>
+                      <th scope="col">등록 날짜</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabledocumentList">
+<!--                     <tr class="task">
+                      <td>외부출처문서관리대장</td>
+                      <td>한소희</td>
+                      <td>2018.02.26</td>
+                    </tr>
+                    <tr class="task">
+                      <td>외부출처문서관리대장</td>
+                      <td>한소희</td>
+                      <td>2018.02.26</td>
+                    </tr>
+                    <tr class="task">
+                      <td>외부출처문서관리대장</td>
+                      <td>한소희</td>
+                      <td>2018.02.26</td>
+                    </tr> -->
+                  </tbody>
+                </table>
+                
             </div>
-            <!-- /Document Management -->
-        </section>
-        <!-- /top section -->
+        </div>
 
-        <!-- Category(miller columns) -->
-        <section id="category" class="row">
-            <!-- Category1 -->
-            <div id="category1Container" class="col-md-2 col-xs-12 col-sm-12 categoryContainer" style="padding-right : 0">
-                <div class="listConatiner">
-                    <div class="listName">
-                        <p>대분류</p>
-                    </div>
-                    <ol id="category1">
-                    </ol>
-                </div>
-            </div>
-            <!-- /Category1 -->
-
-            <!-- Category2 -->
-            <div id="category2Container" class="col-md-2 col-xs-12 col-sm-12 categoryContainer" style="padding : 0">
-                <div class="listConatiner">
-                    <div class="listName">
-                        <p>중분류</p>
-                    </div>
-                    <ol id="category2">
-                    </ol>
-                </div>
-
-            </div>
-            <!-- /Category2 -->
-
-            <!-- Category3 -->
-            <div id="category3Container" class="col-md-4 col-xs-12 col-sm-12 categoryContainer" style="padding : 0">
-                <div class="listConatiner">
-                    <div class="listName">
-                        <p>소분류</p>
-                    </div>
-                    <ol id="category3">
-                    </ol>
-                </div>
-            </div>
-            <!-- /Category3 -->
-
-            <!-- Document List -->
-            <div id="documentListContainer" class="col-md-4 col-xs-12 col-sm-12 categoryContainer" style="padding-left : 0">
-                <div class="listConatiner">
-                    <div class="listName">
-                        <p>문서목록</p>
-                    </div>
-                    <ol id="documentList">
-
-
-                    </ol>
-                </div>
-            </div>
-            <!-- /Document List -->
-        </section>
-        <!-- /Category(miller columns) -->
+        <!-- Context Menu -->
+        <nav id="context-menu" class="context-menu">
+            <ul class="context-menu__items">
+              <li class="context-menu__item">
+                <a href="#" class="context-menu__link" data-action="View"><i class="far fa-clock"></i>&nbsp;&nbsp;&nbsp;버전 관리</a>
+              </li>
+              <li class="context-menu__item">
+                <a href="#" class="context-menu__link" data-action="download"><i class="fas fa-download"></i>&nbsp;&nbsp;&nbsp;다운로드</a>
+              </li>
+              <li class="context-menu__item">
+                <a href="#" class="context-menu__link" data-action="delete"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;&nbsp;삭제</a>
+              </li>
+            </ul>
+        </nav>
+        <!-- /Context Menu -->
     </content>
     <!-- /content -->
 
-    <!-- Context Menu -->
-    <nav id="context-menu" class="context-menu">
-        <ul class="context-menu__items">
-          <li class="context-menu__item">
-            <a href="#" class="context-menu__link" data-action="View"><i class="far fa-clock"></i>&nbsp;&nbsp;버전 관리</a>
-          </li>
-        </ul>
-    </nav>
-    <!-- /Context Menu -->
+
+
 
     <!-- Document Enrollment  Modal -->
     <div class="modal fade" id="documentEnrollmentModal" tabindex="-1" role="dialog" aria-labelledby="documentEnrollmentModalLabel" aria-hidden="true">
@@ -287,6 +289,27 @@
     </div>
     <!-- /Version Management Modal -->
 
+    <!-- Category Enrollment Modal -->
+    <div class="modal fade" id="categoryEnrollmentModal" tabindex="-1" role="dialog" aria-labelledby="categoryEnrollmentModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="categoryEnrollmentModalLabel">분류 등록</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Category Enrollment Modal -->
+
 
 </body>
 
@@ -297,7 +320,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <!-- FontAwesome CDN -->
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-<!--jquery ui-->
+<!--jquery UI CDN-->
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <!-- Custom JS -->
