@@ -2,37 +2,65 @@
 
 window.onload = () => {	
 	getCategory1();
-}
 
-jQuery(document).ready(function(){
     let accordionsMenu = $('.cd-accordion-menu');
-
-    if( accordionsMenu.length > 0 ) {
-        
+    if( accordionsMenu.length > 0 ) {        
         accordionsMenu.each(function(){
             let accordion = $(this);
-            //detect change in the input[type="checkbox"] value
             accordion.on('change', 'input[type="checkbox"]', function(){
                 let checkbox = $(this);
                 ( checkbox.prop('checked') ) ? checkbox.siblings('ul').attr('style', 'display:none;').slideDown(300) : checkbox.siblings('ul').attr('style', 'display:block;').slideUp(300);
             });
         });
-    } 
-  
-  // $( ".menu-button" ).click(function() {
-  //   $('.sidebar').toggleClass('sidebar-close');
-  //   $('.content').toggleClass('content_full-width');
-  //   $('.menu-icon').toggleClass('click-rotate');
-  // });
+    }
+}
+
+let upperCategoryCode = '';
+let CategoryStep = 1;
+
+$("#categoryEnrollmentModal").on('show.bs.modal', function () {
+    document.getElementById("categoryName").value = "";
+    document.getElementById('categoryLocation').innerHTML = document.getElementById('folderprocess').innerHTML;
 });
+
+let addCategory = () => {
+    
+    let categoryName = document.getElementById("categoryName").value;
+    let code = createHash();
+    let data = {upperCategoryCode : upperCategoryCode, CategoryStep : CategoryStep, categoryName:categoryName, code : code}
+
+    $.ajax({
+        url: 'http://igrus.mireene.com/php/dms_php/addCategory.php',
+        type: 'POST',
+        data: data,
+        dataType: 'html',
+        success: function(data) {
+            alert("분류가 추가되었습니다.");
+            getCategory1();
+            $("#categoryEnrollmentModal").modal("hide");
+
+        },
+        error: function(request, status, error) {
+            console.log(request, status, error);
+        },
+    });
+
+}
+
+function createHash() {
+    var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ";
+    var string_length = 10;
+    var randomstring = '';
+    for (var i = 0; i < string_length; i++) {
+        var rnum = Math.floor(Math.random() * chars.length);
+        randomstring += chars.substring(rnum, rnum + 1);
+    }
+    return randomstring;
+}
 
 let getCategory1 = () => {
     let category = document.getElementById("category");
-
-
-	let category1 = document.getElementById("category1");
-    let selectC1 = document.getElementById("selectC1");
-
+    $("#category").empty();
 	$.ajax({
         url: 'http://igrus.mireene.com/php/dms_php/getCategory1.php',
         type: 'POST',
@@ -40,7 +68,7 @@ let getCategory1 = () => {
         success: function(data) {
         	for(let value of data){
                 let li = document.createElement("li");
-                li.setAttribute("class", "has-children category1");
+                li.setAttribute("class", "has-children");
                 li.setAttribute("id", value.code);
 
                 let checkbox = document.createElement("input");
@@ -50,6 +78,7 @@ let getCategory1 = () => {
 
                 let label = document.createElement("label");
                 label.setAttribute("for", "group-"+value.code);
+                label.setAttribute("class", "category1");
                 label.textContent = value.name;
 
                 let folder = document.createElement("i");
@@ -62,6 +91,29 @@ let getCategory1 = () => {
 
                 category.appendChild(li);
         	}
+
+            $( ".category1" ).click(function() {
+                $("#process_c2").empty();
+                $("#process_c3").empty();
+                $("#tabledocumentList").empty();
+
+                let fileUploadBtn = document.getElementById("fileUploadBtn");
+                fileUploadBtn.classList.add("disabled");
+                fileUploadBtn.style.color = "#dbdbdb";
+                fileUploadBtn.setAttribute("data-toggle", "");
+
+                let categoryAddBtn = document.getElementById("categoryAddBtn");
+                categoryAddBtn.classList.remove("disabled");
+                categoryAddBtn.style.color = "#555";
+                categoryAddBtn.setAttribute("data-toggle", "modal");
+
+                document.getElementById('process_c1').textContent = $(this).text();
+
+                upperCategoryCode = $(this).attr("for");
+                upperCategoryCode = upperCategoryCode.replace("group-", "");
+
+                CategoryStep = 2;
+            });
 
             getCategory2();
         },
@@ -81,9 +133,8 @@ let getCategory2 = () => {
         success: function(data) {
         	for(let value of data){
                 let category1 = document.getElementById(value.c1_code);
-
+                console.log(category1);
                 let ul = document.createElement("ul");
-                ul.setAttribute("class","category2");
 
                 let li = document.createElement("li");
                 li.setAttribute("class","has-children");
@@ -95,6 +146,7 @@ let getCategory2 = () => {
 
                 let label = document.createElement("label");
                 label.setAttribute("for", "sub-group-"+value.code);
+                label.setAttribute("class", "category2");
                 label.textContent = value.name;
 
                 let folder = document.createElement("i");
@@ -112,8 +164,33 @@ let getCategory2 = () => {
                 ul.appendChild(li);
 
                 category1.appendChild(ul);
-
         	}
+
+            $( ".category2" ).click(function() {
+                $("#process_c3").empty();
+                $("#tabledocumentList").empty();
+
+                let fileUploadBtn = document.getElementById("fileUploadBtn");
+                fileUploadBtn.classList.add("disabled");
+                fileUploadBtn.style.color = "#dbdbdb";
+                fileUploadBtn.setAttribute("data-toggle", "");
+
+                let categoryAddBtn = document.getElementById("categoryAddBtn");
+                categoryAddBtn.classList.remove("disabled");
+                categoryAddBtn.style.color = "#555";
+                categoryAddBtn.setAttribute("data-toggle", "modal");
+
+                let i = document.createElement("i");
+                i.setAttribute("class", "fas fa-angle-right fa-lg");
+                i.setAttribute("style", "color: #bdbdbd; margin : 0 10px;");
+
+                document.getElementById('process_c2').textContent = $(this).text();
+                document.getElementById('process_c2').prepend(i);
+                
+                upperCategoryCode = $(this).attr("for");
+                upperCategoryCode = upperCategoryCode.replace("sub-group-", "");
+                CategoryStep = 3;
+            });
 
             getCategory3();
         },
@@ -147,6 +224,25 @@ let getCategory3 = () => {
                 category2.appendChild(li);
         	}
 
+            $( ".category3" ).click(function() {
+                let i = document.createElement("i");
+                i.setAttribute("class", "fas fa-angle-right fa-lg");
+                i.setAttribute("style", "color: #bdbdbd; margin : 0 10px;");
+
+                //disabled color : #dbdbdb
+                let categoryAddBtn = document.getElementById("categoryAddBtn");
+                categoryAddBtn.classList.add("disabled");
+                categoryAddBtn.style.color = "#dbdbdb";
+                categoryAddBtn.setAttribute("data-toggle", "");
+
+                let fileUploadBtn = document.getElementById("fileUploadBtn");
+                fileUploadBtn.classList.remove("disabled");
+                fileUploadBtn.style.color = "#555";
+                fileUploadBtn.setAttribute("data-toggle", "modal");
+
+                document.getElementById('process_c3').textContent = $(this).text();
+                document.getElementById('process_c3').prepend(i);
+            });
 
         },
         error: function(request, status, error) {
@@ -157,7 +253,6 @@ let getCategory3 = () => {
 }
 
 let getDocumentList = id => {
-
 	let documentList = document.getElementById("tabledocumentList");
 	$("#tabledocumentList").empty();
 	
@@ -173,6 +268,9 @@ let getDocumentList = id => {
                 let tr = document.createElement("tr");
                 tr.setAttribute("class", "task");
                 tr.setAttribute("id", value.code);
+                tr.setAttribute("data-file", value.filename);
+                tr.setAttribute("data-ftpfile", value.encodefilename);
+                tr.setAttribute("data-c3code", value.c3_code);
 
                 let name = document.createElement("td");
                 name.textContent = value.name;
@@ -188,7 +286,6 @@ let getDocumentList = id => {
                 tr.appendChild(date);
 
                 documentList.appendChild(tr);
-
         	}
 
         },
@@ -196,22 +293,14 @@ let getDocumentList = id => {
             console.log(request, status, error);
         },
     });
-
 }
 
-let selectDocumentid;
+let deleteDocument = id => {
+    let target = document.getElementById(id);
+    if(confirm("'"+target.childNodes[0].textContent + "' 을(를) 정말 삭제하시겠습니까?")){
 
-let selectDocument = id => {
-    selectDocumentid = document.getElementById(id);
-    selectDocumentid.classList.add("selection");
-    $("#"+id).siblings().removeClass("selection");
-}
-
-let deleteDocument = () => {
-    if(confirm("'"+selectDocumentid.textContent.replace("다운로드","") + "' 을(를) 정말 삭제하시겠습니까?")){
-        let id = selectDocumentid.id;
-        let filename = selectDocumentid.getAttribute("data-file");
-        let c3code = selectDocumentid.getAttribute("data-c3code");
+        let filename = target.getAttribute("data-ftpfile");
+        let c3code = target.getAttribute("data-c3code");
 
         let data = {code : id, filename : filename};
 
@@ -233,66 +322,6 @@ let deleteDocument = () => {
 
 let downloadDocument = filename => {
     window.location.href = "http://igrus.mireene.com/medical_document/" + filename;
-}
-
-let getselectC2 = () => {
-    let selectC2 = document.getElementById("selectC2");
-    let selectC1 = document.getElementById("selectC1");
-    let id = selectC1.options[selectC1.selectedIndex].value;
-
-    // $("#selectC2").empty();
-    // $("#selectC3").empty();
-
-    let data = {code : id};
-
-    $.ajax({
-        url: 'http://igrus.mireene.com/php/dms_php/getCategory2.php',
-        type: 'POST',
-        data: data,
-        dataType: 'json',
-        success: function(data) {
-            for(let value of data){
-                let option = document.createElement("option");
-                option.setAttribute("value", value.code);
-                option.textContent = value.name;
-
-                selectC2.appendChild(option);
-            }
-        },
-        error: function(request, status, error) {
-            console.log(request, status, error);
-        },
-    });
-
-}
-
-let getselectC3 = () => {
-    let selectC2 = document.getElementById("selectC2");
-    let selectC3 = document.getElementById("selectC3");
-    let id = selectC2.options[selectC2.selectedIndex].value;
-
-    // $("#selectC3").empty();
-
-    let data = {code : id};
-
-    $.ajax({
-        url: 'http://igrus.mireene.com/php/dms_php/getCategory3.php',
-        type: 'POST',
-        data: data,
-        dataType: 'json',
-        success: function(data) {
-            for(let value of data){
-                let option = document.createElement("option");
-                option.setAttribute("value", value.code);
-                option.textContent = value.name;
-
-                selectC3.appendChild(option);
-            }
-        },
-        error: function(request, status, error) {
-            console.log(request, status, error);
-        },
-    });    
 }
 
 //file upload
@@ -467,6 +496,9 @@ let convertFileSize = x => {
   var e = Math.floor(Math.log(x) / Math.log(1024));
   return (x / Math.pow(1024, e)).toFixed(2) + " " + s[e];
 };
+
+
+
 
 let versionManagementOpen = id => {
     getDocumentVersionList(id);
@@ -799,10 +831,10 @@ function clickInsideElement( e, className ) {
     }
     //TODO
     else if(type === "download"){
-        alert("다운로드");
+        downloadDocument(taskItemInContext.getAttribute("data-file"));
     }
     else if(type ==="delete"){
-
+        deleteDocument(taskItemInContext.getAttribute("id"));
     }
     toggleMenuOff();
   }

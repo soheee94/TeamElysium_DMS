@@ -25,17 +25,34 @@
     <!-- header -->
     <header>
         <i class="fas fa-bars fa-lg" style="color: #fff; cursor: pointer; height: 60px; margin-right: 5px;" class="menu_icon"></i>
-<!--        <h1 class="header_logo">Document Management System</h1> -->        
+        <!--<h1 class="header_logo">Document Management System</h1> -->        
         <p class="header_user">sohee.han@teamelysium.kr</p>
     </header>
     <!-- /header -->
+
+    <!-- section -->
+    <section class="row">
+      <div class="col-md-2 flex">
+        <div class="dropdown">
+          <button class="btn btn-upload" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">새로 만들기</button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" id="categoryAddBtn" data-toggle="modal" data-target="#categoryEnrollmentModal"><i class="fas fa-folder"></i>&nbsp;&nbsp;&nbsp;분류 추가</a>
+            <a class="dropdown-item disabled" id="fileUploadBtn" data-toggle="" data-target="#documentEnrollmentModal"><i class="fas fa-file"></i>&nbsp;&nbsp;&nbsp;문서 업로드</a>
+          </div>
+        </div>        
+      </div>
+      <div class="col-md-10 flex" style="padding-left: 0;">
+        <p id="folderprocess"><span id="process_c1"></span><span id="process_c2"></span><span id="process_c3"></span></p>
+      </div>
+    </section>
+    <!-- /section -->
 
     <!-- content -->
     <content>
         <div class="row wrapper">
             <div class="sidebar col-md-2">
                 <nav class="nav nav_module">
-                    <h2 class="nav_head">Module Navigation</h2>
+                    <h2 class="nav_head">Category Navigation</h2>
 
                     <ul class="cd-accordion-menu animate" id="category">
                         <!--Sampe UI-->
@@ -69,22 +86,12 @@
                   <thead class="thead-light">
                     <tr>
                       <th scope="col" style="width:60%;">이름</th>
-                      <th scope="col">등록자</th>
-                      <th scope="col">등록 날짜</th>
+                      <th scope="col" style="width:20%;">등록자</th>
+                      <th scope="col" style="width:20%;">등록 날짜</th>
                     </tr>
                   </thead>
                   <tbody id="tabledocumentList">
-<!--                     <tr class="task">
-                      <td>외부출처문서관리대장</td>
-                      <td>한소희</td>
-                      <td>2018.02.26</td>
-                    </tr>
-                    <tr class="task">
-                      <td>외부출처문서관리대장</td>
-                      <td>한소희</td>
-                      <td>2018.02.26</td>
-                    </tr>
-                    <tr class="task">
+                    <!--<tr class="task">
                       <td>외부출처문서관리대장</td>
                       <td>한소희</td>
                       <td>2018.02.26</td>
@@ -104,6 +111,7 @@
               <li class="context-menu__item">
                 <a href="#" class="context-menu__link" data-action="download"><i class="fas fa-download"></i>&nbsp;&nbsp;&nbsp;다운로드</a>
               </li>
+              <div class="dropdown-divider"></div>
               <li class="context-menu__item">
                 <a href="#" class="context-menu__link" data-action="delete"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;&nbsp;삭제</a>
               </li>
@@ -113,51 +121,18 @@
     </content>
     <!-- /content -->
 
-
-
-
     <!-- Document Enrollment  Modal -->
     <div class="modal fade" id="documentEnrollmentModal" tabindex="-1" role="dialog" aria-labelledby="documentEnrollmentModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="documentEnrollmentModalLabel">File Upload</h5>
+                    <h5 class="modal-title" id="documentEnrollmentModalLabel">문서 등록</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
+          	          <span aria-hidden="true">&times;</span>
+          	        </button>
                 </div>
 
                 <div class="modal-body">
-                    <div class="row fileselect">
-                        <div class="input-group mb-3 col-md-4">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" for="selectC1">1</label>
-                            </div>
-                            <select class="custom-select " id="selectC1" onchange="getselectC2()">
-                                <option disabled selected value> -- </option>
-                            </select>
-                        </div>
-
-                        <div class="input-group mb-3 col-md-4">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" for="selectC2">2</label>
-                            </div>
-                            <select class="custom-select " id="selectC2" onchange="getselectC3()">
-                                <option disabled selected value> -- </option>
-                            </select>
-                        </div>
-
-                        <div class="input-group mb-3 col-md-4">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" for="selectC3">3</label>
-                            </div>
-                            <select class="custom-select " id="selectC3">
-                                <option disabled selected value> -- </option>
-                            </select>
-                        </div>
-                    </div>
-
-
                     <form id="upload" method="POST" class="form-group" enctype="multipart/form-data">
                         <input type="hidden" id="MAX_FILE_SIZE" name="file" value="300000" />
 
@@ -254,7 +229,7 @@
           <div class="modal-body">
             <form id="newVersionUploadForm"  method="POST" enctype="multipart/form-data">
                 <input type="hidden" id="MAX_FILE_SIZE" name="file" value="300000" />
-                <label for="newVersionUpload" class="btn btn-primary">새 버전 업로드</label>
+                <label for="newVersionUpload" class="btn">새 버전 업로드</label>
                 <input type="file" name="file" id="newVersionUpload" style="display : none;" >
             </form>
             
@@ -300,10 +275,12 @@
             </button>
           </div>
           <div class="modal-body">
-
+            <p class="categoryTarget"><b>현재 위치 &nbsp;: </b>&nbsp;<span id="categoryLocation"></span></p>
+            <input type="text" name="categoryName" id="categoryName">
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
+            <button type="button" class="btn" data-dismiss="modal">취소</button>
+            <button type="button" class="btn btn-primary" onclick="addCategory()">만들기</button>
           </div>
         </div>
       </div>

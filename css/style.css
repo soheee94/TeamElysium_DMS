@@ -100,6 +100,60 @@ header{
   /Header
 \*------------------------------------*/
 
+
+/*------------------------------------*\
+  section
+\*------------------------------------*/
+section{
+  border-bottom: 1px solid #bdbdbd;
+  height: 60px; 
+  padding: 0 20px;
+  margin-bottom: 1px;
+  box-shadow:0px 1px 1px #bdbdbd;
+ 
+}
+
+.flex{
+  display: flex !important;
+  justify-content: flex-start;
+}
+
+.flex div{
+    align-self: center;
+}
+
+.btn-upload{
+  font-size: 13px !important;
+  border-radius: 0 !important;
+  background-color: #222e38;
+  color: #fff;
+}
+
+.btn-upload:focus{
+  box-shadow: 0 0 0 0.2rem rgba(168, 168, 168, 0.25) !important;
+}
+
+#folderprocess{
+  align-self: center;
+  margin-bottom: 0;
+  font-weight: 600;
+  color: #515253;
+  font-size: 14px;
+}
+
+#categoryAddBtn, #fileUploadBtn{
+  text-align: left !important;
+  color: #555;
+}
+
+#fileUploadBtn{
+  color: #dbdbdb;
+}
+
+/*------------------------------------*\
+  section
+\*------------------------------------*/
+
 /*------------------------------------*\
   side bar
 \*------------------------------------*/
@@ -113,7 +167,7 @@ header{
     overflow-y: auto;
     transition: left ease-out 240ms;
     width: 100%;
-    height: calc(100vh - 60px);
+    height: calc(100vh - 121px);
   }
 
   .sidebar::-webkit-scrollbar {
@@ -149,7 +203,6 @@ header{
   }
 
   .cd-accordion-menu input[type=checkbox] {
-    /* hide native checkbox */
     position: absolute;
     opacity: 0;
   }
@@ -171,7 +224,7 @@ header{
 
   .cd-accordion-menu label:hover, .cd-accordion-menu a:hover {
     background-color: #eb5244;
-    color: #fff;
+    color: #fff !important;
     text-decoration: none;
   }
 
@@ -180,14 +233,11 @@ header{
   }
 
   .cd-accordion-menu ul {
-    /* by default hide all sub menus */
     display: none;
   }
 
   .cd-accordion-menu input[type=checkbox]:checked + label + ul,
   .cd-accordion-menu input[type=checkbox]:checked + label:nth-of-type(n) + ul {
-    /* use label:nth-of-type(n) to fix a bug on safari (<= 8.0.8) with multiple adjacent-sibling selectors*/
-    /* show children when item is checked */
     display: block;
   }
 
@@ -219,109 +269,7 @@ header{
     font-size: 13px;
   }
 
-
-/*------------------------------------*\
-  /Content
-\*------------------------------------*/
-
-/*------------------------------------*\
-  top section
-\*------------------------------------*/
-#top{
-	height: 50px;
-	background-color: #b3b3b3;
-	line-height: 45px;
-}
-
-/*------------------------------------*\
-  /top section
-\*------------------------------------*/
-
-/*------------------------------------*\
-  Category
-\*------------------------------------*/
-.categoryContainer{
-	height: calc(100vh - 150px);
-	padding-left: 0px;
-    padding-right: 0px;
-}
-
-.listConatiner{
-	height: inherit;
-	border : 1px solid #b3b3b3;
-	margin : 5px;
-}
-
-.listName{
-	padding: 0.3em 0.3em 0.3em 1em;
-	border-bottom: 1px solid #b3b3b3;
-}
-
-.listName p{
-	margin-bottom: 0;
-}
-
-/*--- list style ---*/
-
-ol {
-  counter-reset:li;
-  margin: 0;
-  padding: 0;
-/*  height: calc(100vh - 151px - 0.6em);
-  overflow-y: scroll;*/
-}
-
-ol > li {
-  list-style: none;
-  margin: 0 0 0em 1.6em;
-  padding-left: 0.5em;
-  position: relative;
-  border-bottom: 1px solid #d6d6d6;
-  cursor: default;
-}
-
-ol > li:before {
-  content: counter(li);
-  counter-increment:li;
-  position: absolute;
-    left: -1.6em;
-  text-align: center;
-  width: 1.6em;
-  border-bottom: 1px solid #d6d6d6;
-  border-right: 1px solid #d6d6d6;
-}
-
-ol > li:hover {
-  background-color: #DDE4E8;
-}
-
-ol > li.selection {
-  background-color: #08C;
-  color: white;
-}
-/*
-ol > li.selection:before {
-  content: ">";
-  counter-increment:li;
-  position: absolute;
-    left: -1.6em;
-  text-align: center;
-  width: 1.6em;
-  border-bottom: 1px solid #d6d6d6;
-  border-right: 1px solid #d6d6d6;
-}*/
-
-/*--- /list style ---*/
-
-#documentList img{
-	float: right;
-	width: 1em;
-	height: 1em;
-	margin-top: 3px;
-}
-
-
-/* context menu */
+  /* context menu */
 
 .context-menu {
   display: none;
@@ -367,13 +315,25 @@ ol > li.selection:before {
   text-decoration: none;
 }
 
+
 /*------------------------------------*\
-  /Category
+  /Content
 \*------------------------------------*/
 
 /*------------------------------------*\
   Document Enrollment  Modal
 \*------------------------------------*/
+.modal-title{
+  font-weight: 600;
+  color: #515253;
+}
+
+.modal-header{
+  border-bottom: none !important;
+}
+
+
+
 #documentEnrollmentModal .modal-body{
   padding: 0;
 }
@@ -503,6 +463,14 @@ label[for="fileselect"]
   Version Management  Modal
 \*------------------------------------*/
 
+label[for="newVersionUpload"]{
+  font-size: 13px;
+  background-color: #eaeaea;
+  color: #515253;
+  border: none;
+  border-radius: 0
+}
+
 #versionList{
   font-size: 0.8em;
 }
@@ -540,7 +508,7 @@ label[for="fileselect"]
 .dropdown-item{
   font-size: 0.9em;
   text-align: center !important;
-  color: #555 !important;
+  color: #555;
   cursor: pointer;
 }
 
@@ -562,4 +530,20 @@ label[for="fileselect"]
 
 /*------------------------------------*\
   /Version Management  Modal
+\*------------------------------------*/
+
+/*------------------------------------*\
+  Category Enrollment  Modal
+\*------------------------------------*/
+#categoryName{
+  width: 100%;
+  height: 30px;
+}
+
+.categoryTarget{
+  font-size: 12px;
+}
+
+/*------------------------------------*\
+  /Category Enrollment  Modal
 \*------------------------------------*/
