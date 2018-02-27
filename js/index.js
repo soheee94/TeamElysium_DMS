@@ -133,7 +133,6 @@ let getCategory2 = () => {
         success: function(data) {
         	for(let value of data){
                 let category1 = document.getElementById(value.c1_code);
-                console.log(category1);
                 let ul = document.createElement("ul");
 
                 let li = document.createElement("li");
@@ -297,7 +296,7 @@ let getDocumentList = id => {
 
 let deleteDocument = id => {
     let target = document.getElementById(id);
-    if(confirm("'"+target.childNodes[0].textContent + "' 을(를) 정말 삭제하시겠습니까?")){
+    if(confirm("'"+target.childNodes[0].textContent + "' 을(를) 정말 삭제하시겠습니까? \n(버전 관리의 모든 파일도 함께 삭제됩니다.)")){
 
         let filename = target.getAttribute("data-ftpfile");
         let c3code = target.getAttribute("data-c3code");
@@ -330,59 +329,59 @@ $("#upload").submit(function(e) {
     let formData = new FormData(this);
 
     let filecnt = document.getElementById('fileselect').files.length;
-    let c3code = document.getElementById("selectC3").value;
+    let c3code = upperCategoryCode;
 
-    if(c3code !== "" && filecnt !== 0){
-        formData.append('c3_code', c3code);
-        formData.append('registrant', '한소희');
+    console.log(c3code);
 
-        let status = document.createElement("i");
-        status.setAttribute("class", "fas fa-spinner fa-pulse statusicon");
-        status.style["margin-top"] = "8px";
+    if(filecnt !== 0){
+        // formData.append('c3_code', c3code);
+        // formData.append('registrant', '한소희');
 
-        $(".status").append(status);
+        // let status = document.createElement("i");
+        // status.setAttribute("class", "fas fa-spinner fa-pulse statusicon");
+        // status.style["margin-top"] = "8px";
 
-        $.ajax({
-            url: 'http://igrus.mireene.com/php/dms_php/savefile.php',
-            type: 'POST',
-            data: formData,
-            success: function (data) {
-                let dataStatus = data.split("\n");
-                for(let i=0; i<dataStatus.length-1; i++){
-                    let status = document.createElement("i");
+        // $(".status").append(status);
 
-                    if (dataStatus[i] === "존재하는 이름입니다.") {
-                        $("#fileindex"+i).switchClass("primary", "danger"); 
-                        status.setAttribute("class", "fas fa-times statusicon");
+        // $.ajax({
+        //     url: 'http://igrus.mireene.com/php/dms_php/savefile.php',
+        //     type: 'POST',
+        //     data: formData,
+        //     success: function (data) {
+        //         let dataStatus = data.split("\n");
+        //         for(let i=0; i<dataStatus.length-1; i++){
+        //             let status = document.createElement("i");
 
-                        let div4 = document.createElement("div");
-                        div4.setAttribute("class", "feedback");
-                        div4.textContent = "이미 존재하는 문서이름입니다.";
+        //             if (dataStatus[i] === "존재하는 이름입니다.") {
+        //                 $("#fileindex"+i).switchClass("primary", "danger"); 
+        //                 status.setAttribute("class", "fas fa-times statusicon");
 
-                        document.getElementById("fileindex"+i).appendChild(div4);
-                    }
-                    else{
-                        $("#fileindex"+i).switchClass("primary", "success");
-                        status.setAttribute("class", "fas fa-check statusicon");
-                    }
-                    status.style["margin-top"] = "8px";  
-                    $("#fileindex"+i+" .statusicon").remove();
-                    $("#fileindex"+i+" .status").append(status);
-                }
+        //                 let div4 = document.createElement("div");
+        //                 div4.setAttribute("class", "feedback");
+        //                 div4.textContent = "이미 존재하는 문서이름입니다.";
 
-                return false;
-            },
-            cache: false,
-            contentType: false,
-            processData: false
-        });
-    }
-    else if(filecnt === 0){
-        alert("파일을 첨부해주세요.");
+        //                 document.getElementById("fileindex"+i).appendChild(div4);
+        //             }
+        //             else{
+        //                 $("#fileindex"+i).switchClass("primary", "success");
+        //                 status.setAttribute("class", "fas fa-check statusicon");
+        //             }
+        //             status.style["margin-top"] = "8px";  
+        //             $("#fileindex"+i+" .statusicon").remove();
+        //             $("#fileindex"+i+" .status").append(status);
+        //         }
+
+        //         return false;
+        //     },
+        //     cache: false,
+        //     contentType: false,
+        //     processData: false
+        // });
     }
     else{
-        alert("분류를 선택해주세요.");
+        alert("파일을 첨부해주세요.");
     }
+
 });
 
 // drag drop upload files

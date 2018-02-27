@@ -34,16 +34,29 @@
     <section class="row">
       <div class="col-md-2 flex">
         <div class="dropdown">
-          <button class="btn btn-upload" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">새로 만들기</button>
-          <div class="dropdown-menu">
+          <button class="btn btn-upload" id="newUploadMenuButton" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">새로 만들기</button>
+          <div class="dropdown-menu" aria-labelledby="newUploadMenuButton">
             <a class="dropdown-item" id="categoryAddBtn" data-toggle="modal" data-target="#categoryEnrollmentModal"><i class="fas fa-folder"></i>&nbsp;&nbsp;&nbsp;분류 추가</a>
             <a class="dropdown-item disabled" id="fileUploadBtn" data-toggle="" data-target="#documentEnrollmentModal"><i class="fas fa-file"></i>&nbsp;&nbsp;&nbsp;문서 업로드</a>
           </div>
         </div>        
       </div>
-      <div class="col-md-10 flex" style="padding-left: 0;">
+      <div class="col-md-9 flex" style="padding-left: 0;">
         <p id="folderprocess"><span id="process_c1"></span><span id="process_c2"></span><span id="process_c3"></span></p>
       </div>
+      <div class="col-md-1 flex-end dropleft" >
+        <div style="align-self: center; float: right;" id="categorySettingMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-cog fa-lg" style="cursor: pointer;"></i>
+        </div>
+        
+
+        <div class="dropdown-menu" aria-labelledby="categorySettingMenuButton">
+          <a class="dropdown-item" href="#" id="categoryChangeNameBtn"><i class="fas fa-pen-square"></i>&nbsp;&nbsp;&nbsp;이름 변경</a>
+          <a class="dropdown-item" href="#" id="categoryDeleteBtn"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;&nbsp;분류 삭제</a>
+        </div>
+      </div>
+
+      
     </section>
     <!-- /section -->
 
@@ -286,8 +299,6 @@
       </div>
     </div>
     <!-- /Category Enrollment Modal -->
-
-
 </body>
 
 <!-- jQuery CDN -->
