@@ -1,19 +1,20 @@
-/*
-Colors
-
-main color : #222e38;
-point color : #eb5244;
-border : #b3b3b3;
-
-primary : #0069d9;
-danger : #dc3545;
-
-*/
-
 /*------------------------------------*\
-  Common
+  variable
 \*------------------------------------*/
-
+:root{
+  --main-color : #222e38;
+  --point-color : #eb5244;
+  --border-color : #bdbdbd;
+  --text-color : #515253;
+  --text-point-color : #919DA8;
+  --disabled-color : #dbdbdb;
+}
+/*------------------------------------*\
+  /variable
+\*------------------------------------*/
+/*------------------------------------*\
+  Common Setting
+\*------------------------------------*/
 body{
 	width: 100vw;
 	overflow-x: hidden;
@@ -22,7 +23,6 @@ body{
 *, *:before, *:after {
   box-sizing: border-box;
 }
-
 
 ul{
   list-style: none;
@@ -37,79 +37,40 @@ a, label {
   text-decoration: none;
   cursor: pointer;
 }
-
-
 /*------------------------------------*\
-  /Common
-\*------------------------------------*/
-
-/*------------------------------------*\
-  Spacing
-\*------------------------------------*/
-
-.ml-15{
-	margin-left: 15px;
-}
-
-.mr-15{
-	margin-right: 15px;
-}
-
-/*------------------------------------*\
-  /Spacing
+  /Common Setting
 \*------------------------------------*/
 
 /*------------------------------------*\
   Header
 \*------------------------------------*/
-header{
-	background-color: #222e38;
-	height: 60px; 
+header,section{
+  height: 60px; 
   padding: 0 20px;
 }
 
-.header_logo {
-  display: inline-block;
-  line-height: 60px;
-  color: #fff;
-  float: left;
-  text-align: center;
-  font-size: 1.3em;
-  font-weight: 400;
-  font-family: 'Montserrat', sans-serif;
+header{
+	background-color: var(--main-color);	
 }
 
 .header_user {
   float: right;
   font-size: 0.7em;
   font-weight: 400;
-  color: #fff;
+  color: white;
   line-height: 60px;
   margin-bottom: 0;
 }
-
-.menu_icon{
-  margin: 0 10px 0 0;
-  color: #fff;
-  cursor: pointer;
-  transition: transform .3s ease-out;
-}
-
 /*------------------------------------*\
   /Header
 \*------------------------------------*/
-
-
 /*------------------------------------*\
-  section
+  top section
 \*------------------------------------*/
 section{
-  border-bottom: 1px solid #bdbdbd;
-  height: 60px; 
-  padding: 0 20px;
+  border-bottom: 1px solid var(--border-color);
   margin-bottom: 1px;
-  box-shadow:0px 1px 1px #bdbdbd;
- 
+  box-shadow:0px 1px 1px var(--border-color); 
 }
 
 .flex{
@@ -122,7 +83,6 @@ section{
   justify-content: flex-end;
 }
 
-
 .flex div{
     align-self: center;
 }
@@ -130,8 +90,8 @@ section{
 .btn-upload{
   font-size: 13px !important;
   border-radius: 0 !important;
-  background-color: #222e38;
-  color: #fff;
+  background-color: var(--main-color);
+  color: white;
 }
 
 .btn-upload:focus{
@@ -142,21 +102,21 @@ section{
   align-self: center;
   margin-bottom: 0;
   font-weight: 600;
-  color: #515253;
+  color: var(--text-color);
   font-size: 14px;
 }
 
 #categoryAddBtn, #fileUploadBtn, #categoryChangeNameBtn, #categoryDeleteBtn{
   text-align: left !important;
-  color: #555;
+  color: var(--text-color);
 }
 
 #fileUploadBtn{
-  color: #dbdbdb;
+  color: var(--disabled-color);
 }
 
 /*------------------------------------*\
-  section
+  /top section
 \*------------------------------------*/
 
 /*------------------------------------*\
@@ -168,7 +128,7 @@ section{
 
   .sidebar{
     padding: 10px;
-    border-right: 1px solid #bdbdbd;
+    border-right: 1px solid var(--border-color);
     overflow-y: auto;
     transition: left ease-out 240ms;
     width: 100%;
@@ -177,19 +137,19 @@ section{
 
   .sidebar::-webkit-scrollbar {
     width: 6px;
-    background-color: #919DA8;
+    background-color: var(--text-point-color);
   }
   .sidebar::-webkit-scrollbar-thumb {
-    background-color: #515253;
+    background-color: var(--text-color);
   }
   .sidebar::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: #919DA8;
+    background-color: var(--text-point-color);
   }
 
   .nav_head {
     margin-bottom: 4px;
-    color: #919DA8;
+    color: var(--text-point-color);
     font-size: 1em;
     font-weight: 600;
   }
@@ -200,7 +160,7 @@ section{
     width: 16px;
     height: 16px;
     padding-bottom: 2px;
-    fill: #515253;
+    fill: var(--text-color);
   }
 
   .cd-accordion-menu{
@@ -216,7 +176,7 @@ section{
     position: relative;
     display: block;
     padding: 5px;
-    color: #515253;
+    color: var(--text-color);
     font-size: 12px;
     font-weight: 600;
     margin-bottom: 0;
@@ -228,13 +188,13 @@ section{
   }
 
   .cd-accordion-menu label:hover, .cd-accordion-menu a:hover {
-    background-color: #eb5244;
-    color: #fff !important;
+    background-color: var(--point-color);
+    color: white !important;
     text-decoration: none;
   }
 
   .cd-accordion-menu label:hover svg, .cd-accordion-menu a:hover svg {
-    color: #fff;
+    color: white;
   }
 
   .cd-accordion-menu ul {
@@ -258,7 +218,6 @@ section{
     font-weight: 400;
   }
 
-
 /*------------------------------------*\
   /side bar
 \*------------------------------------*/
@@ -274,14 +233,14 @@ section{
 
   #content::-webkit-scrollbar {
     width: 6px;
-    background-color: #919DA8;
+    background-color: var(--text-point-color);
   }
   #content::-webkit-scrollbar-thumb {
-    background-color: #515253;
+    background-color: var(--text-color);
   }
   #content::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: #919DA8;
+    background-color: var(--text-point-color);
   }
 
   table{
@@ -290,50 +249,48 @@ section{
 
   /* context menu */
 
-.context-menu {
-  display: none;
-  position: absolute;
-  z-index: 10;
-  padding: 12px 0;
-  width: 240px;
-  background-color: #fff;
-  border: solid 1px #dfdfdf;
-  box-shadow: 1px 1px 2px #cfcfcf;
-}
+  .context-menu {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    padding: 12px 0;
+    width: 240px;
+    background-color: white;
+    border: solid 1px var(--border-color);
+  }
 
-.context-menu--active {
-  display: block;
-}
+  .context-menu--active {
+    display: block;
+  }
 
-.context-menu__items {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
+  .context-menu__items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
 
-.context-menu__item {
-  display: block;
-  margin-bottom: 4px;
-}
+  .context-menu__item {
+    display: block;
+    margin-bottom: 4px;
+  }
 
-.context-menu__item:last-child {
-  margin-bottom: 0;
-}
+  .context-menu__item:last-child {
+    margin-bottom: 0;
+  }
 
-.context-menu__link {
-  display: block;
-  padding: 4px 12px;
-  text-decoration: none;
-  color: #555;
-  font-size: 0.9em;
-}
+  .context-menu__link {
+    display: block;
+    padding: 4px 12px;
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 0.9em;
+  }
 
-.context-menu__link:hover {
-  background-color: #e5e5e5;
-  color: #555;
-  text-decoration: none;
-}
-
+  .context-menu__link:hover {
+    background-color: #e5e5e5;
+    color: var(--text-color);
+    text-decoration: none;
+  }
 
 /*------------------------------------*\
   /Content
@@ -344,7 +301,7 @@ section{
 \*------------------------------------*/
 .modal-title{
   font-weight: 600;
-  color: #515253;
+  color: var(--text-color);
 }
 
 .modal-header{
@@ -372,12 +329,12 @@ section{
 }
 
 .filesize{
-  color: #727272;
+  color: var(--text-point-color);
   font-size: 0.8em;
 }
 
 .danger{
-  color : #dc3545;
+  color : var(--point-color);
 }
 
 .success{
@@ -385,7 +342,7 @@ section{
 }
 
 .primary{
-  color: #555;
+  color: var(--text-color);
 }
 
 .feedback{
@@ -394,14 +351,13 @@ section{
   width: 100%;
   margin-top: 5px;
   color: white;
-  background-color: #dc3545;
+  background-color: var(--point-color);
   padding: 3px;
 }
 
 #bottom{
   text-align: right;
 }
-
 
 /*------------------------------------*\
   /Document Enrollment  Modal
@@ -414,7 +370,7 @@ section{
 label[for="newVersionUpload"], label[for="fileselect"]{
   font-size: 13px;
   background-color: #eaeaea;
-  color: #515253;
+  color: var(--text-color);
   border: none;
   border-radius: 0
 }
@@ -456,22 +412,22 @@ label[for="newVersionUpload"], label[for="fileselect"]{
 .dropdown-item{
   font-size: 0.9em;
   text-align: center !important;
-  color: #555;
+  color: var(--text-color);
   cursor: pointer;
 }
 
 .dropdown{
   cursor: pointer;
-  color: #727272;
+  color: var(--text-point--color);
 }
 
 .dropdown:hover{
-  color: #555;
-  background-color: #e2e2e2;
+  color: var(--text-color);
+  background-color: #eaeaea;
   border-radius: 50%;
 }
 
-#versionListUl{
+#versionListUl, #filelistul{
   max-height: 45vh;
   overflow-y: scroll;
 }

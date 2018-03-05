@@ -14,18 +14,23 @@ window.onload = () => {
         });
     }
 
-    var fileselect = document.getElementById("fileselect");
-    fileselect.addEventListener("change", FileSelectHandler, false);
+    let fileselect = document.getElementById("fileselect");
+    fileselect.addEventListener("change", FileSelectHandler, false);   
 }
 
 let upperCategoryCode = '';
 let CategoryStep = 1;
+
+$("#documentEnrollmentModal").on('show.bs.modal', function () {
+    $("#filelistul").empty();
+});
 
 $("#categoryEnrollmentModal").on('show.bs.modal', function () {
     document.getElementById("categoryName").value = "";
     document.getElementById('categoryLocation').innerHTML = document.getElementById('folderprocess').innerHTML;
 });
 
+//분류 추가
 let addCategory = () => {
     
     let categoryName = document.getElementById("categoryName").value;
@@ -47,7 +52,6 @@ let addCategory = () => {
             console.log(request, status, error);
         },
     });
-
 }
 
 function createHash() {
@@ -390,33 +394,17 @@ $("#upload").submit(function(e) {
     else{
         alert("파일을 첨부해주세요.");
     }
-
 });
-
-
-// file drag hover
-function FileDragHover(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    e.target.className = (e.type == "dragover" ? "hover" : "");
-}
-
 
 // file selection
 function FileSelectHandler(e) {
-    // cancel event and hover styling
-    FileDragHover(e);
-
-    // fetch FileList object
     var files = e.target.files || e.dataTransfer.files;
-
-    // process all File objects
     for (var i = 0, f; f = files[i]; i++) {
         ParseFile(f, i);
     }
 }
 
-
+//파일 리스트 추가
 let ParseFile = (file, index) => {
     let filelist = document.getElementById("filelistul");
 
@@ -486,8 +474,7 @@ let getDocumentVersionList = id => {
         type: 'POST',
         data: data,
         dataType: 'json',
-        success: function(data) {
-            
+        success: function(data) {            
             for(let value of data){
                 let li = document.createElement("li");
                 li.setAttribute("class", "row");
