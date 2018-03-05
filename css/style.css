@@ -111,8 +111,9 @@ section{
   color: var(--text-color);
 }
 
-#fileUploadBtn{
-  color: var(--disabled-color);
+.disabled{
+  color: var(--disabled-color) !important;
+  cursor: default !important;
 }
 
 /*------------------------------------*\
@@ -439,9 +440,10 @@ label[for="newVersionUpload"], label[for="fileselect"]{
 /*------------------------------------*\
   Category Enrollment  Modal
 \*------------------------------------*/
-#categoryName{
+#categoryName, #categoryModifyName{
   width: 100%;
-  height: 30px;
+  height: 40px;
+  padding: 0 10px;
 }
 
 .categoryTarget{

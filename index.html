@@ -24,7 +24,8 @@
 <body>
     <!-- header -->
     <header>
-        <i class="fas fa-bars fa-lg" style="color: #fff; cursor: pointer; height: 60px; margin-right: 5px;"></i>     
+        <img src="./img/logo.png" width="120px" height="60px">
+<!--         <i class="fas fa-bars fa-lg" style="color: #fff; cursor: pointer; height: 60px; margin-right: 5px;"></i>     --> 
         <p class="header_user">sohee.han@teamelysium.kr</p>
     </header>
     <!-- /header -->
@@ -35,7 +36,7 @@
         <div class="dropdown">
           <button class="btn btn-upload" id="newUploadMenuButton" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">새로 만들기</button>
           <div class="dropdown-menu" aria-labelledby="newUploadMenuButton">
-            <a class="dropdown-item" id="categoryAddBtn" data-toggle="modal" data-target="#categoryEnrollmentModal"><i class="fas fa-folder"></i>&nbsp;&nbsp;&nbsp;분류 추가</a>
+            <a class="dropdown-item" id="categoryAddBtn" data-toggle="modal" data-target="#categorySettingModal"><i class="fas fa-folder"></i>&nbsp;&nbsp;&nbsp;분류 추가</a>
             <a class="dropdown-item disabled" id="fileUploadBtn" data-toggle="" data-target="#documentEnrollmentModal"><i class="fas fa-file"></i>&nbsp;&nbsp;&nbsp;문서 업로드</a>
           </div>
         </div>        
@@ -52,8 +53,8 @@
           <i class="fas fa-cog fa-lg" style="cursor: pointer;"></i>
         </div>
         <div class="dropdown-menu" aria-labelledby="categorySettingMenuButton">
-          <a class="dropdown-item" href="#" id="categoryChangeNameBtn"><i class="fas fa-pen-square"></i>&nbsp;&nbsp;&nbsp;이름 변경</a>
-          <a class="dropdown-item" href="#" id="categoryDeleteBtn"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;&nbsp;분류 삭제</a>
+          <a class="dropdown-item disabled" href="#" id="categoryChangeNameBtn" data-toggle="" data-target="#categoryModifyModal"><i class="fas fa-pen-square"></i>&nbsp;&nbsp;&nbsp;이름 변경</a>
+          <a class="dropdown-item disabled" href="#" id="categoryDeleteBtn" onclick=""><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;&nbsp;분류 삭제</a>
         </div>
       </div>
       <!-- /category setting + dropdown -->
@@ -211,12 +212,12 @@
       </div><!--/modal-dialog-->
     </div>
     <!-- /Version Management Modal -->
-    <!-- Category Enrollment Modal -->
-    <div class="modal fade" id="categoryEnrollmentModal" tabindex="-1" role="dialog" aria-labelledby="categoryEnrollmentModalLabel" aria-hidden="true">
+    <!-- Category setting Modal -->
+    <div class="modal fade" id="categorySettingModal" tabindex="-1" role="dialog" aria-labelledby="categorySettingModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="categoryEnrollmentModalLabel">분류 등록</h5>
+            <h5 class="modal-title" id="categorySettingModalLabel">분류 등록</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -232,7 +233,29 @@
         </div>
       </div>
     </div>
-    <!-- /Category Enrollment Modal -->
+    <!-- /Category setting Modal -->
+
+    <!-- Category modify Modal -->
+    <div class="modal fade" id="categoryModifyModal" tabindex="-1" role="dialog" aria-labelledby="categoryModifyModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="categoryModifyModalLabel">분류 이름 변경</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="text" name="categoryModifyName" id="categoryModifyName">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn" data-dismiss="modal">취소</button>
+            <button type="button" class="btn btn-primary" onclick="modifyCategory()">변경</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Category modify Modal -->
 </body>
 
 <!-- jQuery CDN -->

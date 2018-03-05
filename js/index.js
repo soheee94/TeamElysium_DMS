@@ -18,6 +18,7 @@ window.onload = () => {
     fileselect.addEventListener("change", FileSelectHandler, false);   
 }
 
+let upperCategoryName = '';
 let upperCategoryCode = '';
 let CategoryStep = 1;
 
@@ -25,14 +26,13 @@ $("#documentEnrollmentModal").on('show.bs.modal', function () {
     $("#filelistul").empty();
 });
 
-$("#categoryEnrollmentModal").on('show.bs.modal', function () {
+$("#categorySettingModal").on('show.bs.modal', function () {
     document.getElementById("categoryName").value = "";
     document.getElementById('categoryLocation').innerHTML = document.getElementById('folderprocess').innerHTML;
 });
 
 //분류 추가
-let addCategory = () => {
-    
+let addCategory = () => {    
     let categoryName = document.getElementById("categoryName").value;
     let code = createHash();
     let data = {upperCategoryCode : upperCategoryCode, CategoryStep : CategoryStep, categoryName:categoryName, code : code}
@@ -45,13 +45,69 @@ let addCategory = () => {
         success: function(data) {
             alert("분류가 추가되었습니다.");
             getCategory1();
-            $("#categoryEnrollmentModal").modal("hide");
+            $("#categorySettingModal").modal("hide");
 
         },
         error: function(request, status, error) {
             console.log(request, status, error);
         },
     });
+}
+
+$("#categoryModifyModal").on('show.bs.modal', function () {
+    document.getElementById("categoryModifyName").value = upperCategoryName;
+});
+
+let modifyCategory = () => {
+    let modifyCategoryName = document.getElementById("categoryModifyName").value;
+    let data = {CategoryStep : CategoryStep-1 , modifyCategoryName : modifyCategoryName , code : upperCategoryCode};
+
+    $.ajax({
+        url: 'http://igrus.mireene.com/php/dms_php/modifyCategory.php',
+        type: 'POST',
+        data: data,
+        dataType: 'html',
+        success: function(data) {
+            alert("이름이 변경되었습니다.");
+            getCategory1();
+            document.getElementById("process_c1").textContent = "";
+            document.getElementById("process_c2").textContent = "";
+            document.getElementById("process_c3").textContent = "";
+            $("#tabledocumentList").empty();
+            $("#categoryModifyModal").modal("hide");
+
+        },
+        error: function(request, status, error) {
+            console.log(request, status, error);
+        },
+    });
+    
+}
+
+//TODO : 분류 삭제
+let deleteCategory = () => {
+    if(confirm("** 주의 **\n분류 '"+ upperCategoryName + "' 을(를) 정말 삭제하시겠습니까? \n(이하의 소분류와 문서들도 함께 삭제되며 복구할 수 없습니다.)")){
+        let data = {CategoryStep : CategoryStep-1 , code : upperCategoryCode}
+        $.ajax({
+            url: 'http://igrus.mireene.com/php/dms_php/deleteCategory.php',
+            type: 'POST',
+            data: data,
+            dataType: 'html',
+            success: function(data) {
+                alert("삭제되었습니다.");
+                getCategory1();
+                document.getElementById("process_c1").textContent = "";
+                document.getElementById("process_c2").textContent = "";
+                document.getElementById("process_c3").textContent = "";
+                $("#tabledocumentList").empty();
+                $("#categoryModifyModal").modal("hide");
+
+            },
+            error: function(request, status, error) {
+                console.log(request, status, error);
+            },
+        });
+    }
 }
 
 function createHash() {
@@ -114,7 +170,18 @@ let getCategory1 = () => {
                 categoryAddBtn.style.color = "#555";
                 categoryAddBtn.setAttribute("data-toggle", "modal");
 
+                let categoryChangeNameBtn = document.getElementById("categoryChangeNameBtn");
+                categoryChangeNameBtn.classList.remove("disabled");
+                categoryChangeNameBtn.style.color = "#555";
+                categoryChangeNameBtn.setAttribute("data-toggle", "modal");
+
+                let categoryDeleteBtn = document.getElementById("categoryDeleteBtn");
+                categoryDeleteBtn.classList.remove("disabled");
+                categoryDeleteBtn.style.color = "#555";
+                categoryDeleteBtn.setAttribute("onClick", "deleteCategory()");
+
                 document.getElementById('process_c1').textContent = $(this).text();
+                upperCategoryName = $(this).text();
 
                 upperCategoryCode = $(this).attr("for");
                 upperCategoryCode = upperCategoryCode.replace("group-", "");
@@ -191,6 +258,7 @@ let getCategory2 = () => {
                 i.setAttribute("style", "color: #bdbdbd; margin : 0 10px;");
 
                 document.getElementById('process_c2').textContent = $(this).text();
+                upperCategoryName = $(this).text();
                 document.getElementById('process_c2').prepend(i);
                 
                 upperCategoryCode = $(this).attr("for");
@@ -247,9 +315,11 @@ let getCategory3 = () => {
                 fileUploadBtn.setAttribute("data-toggle", "modal");
 
                 document.getElementById('process_c3').textContent = $(this).text();
+                upperCategoryName = $(this).text();
                 document.getElementById('process_c3').prepend(i);
 
                 upperCategoryCode = $(this).children("a").attr("id");
+                CategoryStep = 4;
             });
 
         },
