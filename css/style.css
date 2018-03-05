@@ -351,81 +351,28 @@ section{
   border-bottom: none !important;
 }
 
-
-
-#documentEnrollmentModal .modal-body{
-  padding: 0;
-}
-
-.fileselect{
-  padding: 1rem;
-}
-
-.fileupload-wrapper{
-  height: 60vh;
-  padding: 1rem;
-}
-
-#fileupload{
-  border-right: 2px dashed #555;
-}
-
-#browse{
-  margin-top: 5px;
-  width: 200px;
-  font-weight: bold;
-  color: white;
-}
-
-#filedrag
-{
-  font-weight: bold;
-  text-align: center;
-  margin: 1em 0;
-  color: #555;
-  cursor: default;
-  height: 90%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-#filedrag div{
-  align-self: center;
-}
-
-#filedrag.hover
-{
-  color: #f00;
-  border-color: #f00;
-  border-style: solid;
-  box-shadow: inset 0 3px 4px #888;
-}
-
 #filelist{
-  overflow-y: scroll;
+  font-size: 0.8em;
 }
 
 #filelist ul{
-  padding: 0;
-  margin: 1em 1.5em;
-
+  padding: 0 1.3rem;
 }
 
 #filelist li{
-  margin-bottom: 2em;
+  margin-bottom: 1.7rem;
 }
 
-#filelist ul p{
-  margin: 0;
+#filelist li:last-of-type{
+  margin-bottom: 0rem;
 }
 
-.filename{
-  font-weight: bold;
+#filelist p{
+  margin-bottom: 2px;
 }
 
 .filesize{
-  color: #c1c1c1;
+  color: #727272;
   font-size: 0.8em;
 }
 
@@ -445,34 +392,16 @@ section{
   font-size: 0.5em;
   text-align: center;
   width: 100%;
-  margin-top: 10px;
+  margin-top: 5px;
   color: white;
   background-color: #dc3545;
   padding: 3px;
-  border-radius: 6px;
 }
 
 #bottom{
-  background-color: #ededed;
   text-align: right;
 }
 
-#bottom button{
-  margin: 20px 20px 20px 0;
-  width: 150px;
-  font-weight: bold;
-  color: white;
-}
-
-label[for="fileselect"]
-{
-  cursor: pointer;
-  color : #0079c1;
-}
-
-.form-group{
-  margin-bottom: 0 !important;
-}
 
 /*------------------------------------*\
   /Document Enrollment  Modal
@@ -482,7 +411,7 @@ label[for="fileselect"]
   Version Management  Modal
 \*------------------------------------*/
 
-label[for="newVersionUpload"]{
+label[for="newVersionUpload"], label[for="fileselect"]{
   font-size: 13px;
   background-color: #eaeaea;
   color: #515253;
@@ -536,7 +465,7 @@ label[for="newVersionUpload"]{
   color: #727272;
 }
 
-.fawrapper:hover{
+.dropdown:hover{
   color: #555;
   background-color: #e2e2e2;
   border-radius: 50%;

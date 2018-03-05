@@ -65,14 +65,14 @@
 				$querycountrows = mysqli_num_rows($querycheck);
 				
 				if($querycountrows == '1'){
-					echo "존재하는 이름입니다.\n";
+					echo "It's a real name.\n";
 				}
 				else{
 					$result = mysqli_query($connection, "INSERT INTO `dms_document`(`code`, `c3_code`, `name`, `filename`) VALUES ('".$code[0]."','".$c3_code."','".$documentname."','".$filenamedb."')");
 
 					if($result){
 						mysqli_query($connection,"INSERT INTO `dms_documentVersion`(`code`, `document_code`, `registrant`, `version`, `file`, `date`) VALUES ('".$dbfilename[0]."','".$code[0]."','".$registrant."','0','".$filenamedb."', now())");
-						echo "successfully uploaded $filename\n";
+						echo "successfully uploaded\n";
 					}
 				}
 			 	

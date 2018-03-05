@@ -136,7 +136,7 @@
 
     <!-- Document Enrollment  Modal -->
     <div class="modal fade" id="documentEnrollmentModal" tabindex="-1" role="dialog" aria-labelledby="documentEnrollmentModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="documentEnrollmentModalLabel">문서 등록</h5>
@@ -148,81 +148,21 @@
                 <div class="modal-body">
                     <form id="upload" method="POST" class="form-group" enctype="multipart/form-data">
                         <input type="hidden" id="MAX_FILE_SIZE" name="file" value="300000" />
+                        <label for="fileselect" class="btn" id="browse">파일 선택</label>
+                        <input type="file" name="file[]" id="fileselect" style="display : none;" data-multiple-caption="{count} files selected" multiple="multiple">
+                        <hr>
+                        <div id="filelist">
+                          <ul id="filelistul" class="modallist">
+   
+                          </ul>
+                        </div>
 
-                        <div class="row fileupload-wrapper">
-                           <div id="fileupload" class="col-md-5">
-                                <div id="filedrag">
-                                    <div>
-                                        <i class="fas fa-arrow-up fa-5x" data-fa-transform="shrink-10" data-fa-mask="fa fa-file"></i>
-                                        <br/><br/>
-                                        Drag and Drop files here
-                                        <br/>or<br/>
-                                        <label for="fileselect" class="btn btn-primary" id="browse">Browse</label>
-                                        <input type="file" name="file[]" id="fileselect" style="display : none;" data-multiple-caption="{count} files selected" multiple="multiple">
-                                    </div>
-                                    
-                                </div>
-                            </div>
-
-                            <div id="filelist" class="col-md-7">
-                                <ul id="filelistul">
-                                <!--Sample UI-->                                 
-                                <!--
-                                     <li class="row">
-                                        <div class="col-md-2">
-                                             <i class="far fa-circle fa-2x" style="margin-top: 8px;"></i>
-                                             <span class="fa-layers-text fa-inverse" data-fa-transform="left-2 down-1" style="font-weight:900; color:#555;">1</span>
-                                        </div>                                        
-                                        <div class="col-md-8">
-                                            <p class="filename">sponsor-package.pdf</p>
-                                            <p class="filesize">1.34 MB</p>                                         
-                                        </div>
-                                        <div class="col-md-2">
-                                            <i class="fas fa-spinner fa-pulse" style="margin-top: 8px;"></i>
-                                        </div> 
-                                    </li>
-
-                                    <li class="row danger">
-                                        <div class="col-md-2 danger">
-                                           <i class="far fa-circle fa-2x" style="margin-top: 8px;"></i>
-                                             <span class="fa-layers-text fa-inverse" data-fa-transform="left-2 down-1" style="font-weight:900; color:#dc3545;">2</span>
-                                        </div>                                        
-                                        <div class="col-md-8">
-                                            <p class="filename danger">sponsor-package.pdf</p>
-                                            <p class="filesize">1.34 MB</p>                                         
-                                        </div>
-                                        <div class="col-md-2 danger">
-                                            <i class="fas fa-times" style="margin-top: 8px;"></i>
-                                        </div>
-
-                                        <div class="feedback">
-                                            이미 존재하는 문서이름 입니다.
-                                        </div>
-                                    </li>
-
-                                    <li class="row">
-                                        <div class="col-md-2 success">
-                                            <i class="far fa-circle fa-2x" style="margin-top: 8px;"></i>
-                                             <span class="fa-layers-text fa-inverse" data-fa-transform="left-2 down-1" style="font-weight:900; color:#0069d9;">3</span>
-                                        </div>                                        
-                                        <div class="col-md-8">
-                                            <p class="filename success">sponsor-package.pdf</p>
-                                            <p class="filesize">1.34 MB</p>                                         
-                                        </div>
-                                        <div class="col-md-2 success">
-                                            <i class="fas fa-check" style="margin-top: 8px;"></i>
-                                        </div>  
-                                    </li> -->
-                               </ul>
-                                
-                            </div> 
-                        </div>                        
-
+                        <hr>
                         <div id="bottom">
-                            <button type="submit" class="btn btn-warning">Upload</button>
+                          <button type="submit" class="btn btn-primary">업로드</button>
+                          <button type="button" class="btn btn-primary">닫기</button>
                         </div>
                     </form>
-
                 </div><!--/modal-body-->
             </div><!--/modal-content-->
         </div><!--/modal-dialog-->
@@ -248,7 +188,7 @@
             
             <hr>
             <div id="versionList">
-                <ul id="versionListUl">
+                <ul id="versionListUl" class="modallist">
                     <!--Sampe UI-->
                     <!-- <li class="row">
                         <div class="col-md-1 fawrapper">

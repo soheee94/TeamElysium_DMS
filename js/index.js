@@ -13,6 +13,9 @@ window.onload = () => {
             });
         });
     }
+
+    var fileselect = document.getElementById("fileselect");
+    fileselect.addEventListener("change", FileSelectHandler, false);
 }
 
 let upperCategoryCode = '';
@@ -241,6 +244,8 @@ let getCategory3 = () => {
 
                 document.getElementById('process_c3').textContent = $(this).text();
                 document.getElementById('process_c3').prepend(i);
+
+                upperCategoryCode = $(this).children("a").attr("id");
             });
 
         },
@@ -331,90 +336,62 @@ $("#upload").submit(function(e) {
     let filecnt = document.getElementById('fileselect').files.length;
     let c3code = upperCategoryCode;
 
-    console.log(c3code);
-
     if(filecnt !== 0){
-        // formData.append('c3_code', c3code);
-        // formData.append('registrant', '한소희');
+        formData.append('c3_code', c3code);
+        formData.append('registrant', '한소희');
 
-        // let status = document.createElement("i");
-        // status.setAttribute("class", "fas fa-spinner fa-pulse statusicon");
-        // status.style["margin-top"] = "8px";
+        let status = document.createElement("i");
+        status.setAttribute("class", "fas fa-spinner fa-pulse statusicon");
+        status.style["margin-top"] = "8px";
 
-        // $(".status").append(status);
+        $(".status").append(status);
 
-        // $.ajax({
-        //     url: 'http://igrus.mireene.com/php/dms_php/savefile.php',
-        //     type: 'POST',
-        //     data: formData,
-        //     success: function (data) {
-        //         let dataStatus = data.split("\n");
-        //         for(let i=0; i<dataStatus.length-1; i++){
-        //             let status = document.createElement("i");
+        $.ajax({
+            url: 'http://igrus.mireene.com/php/dms_php/savefile.php',
+            type: 'POST',
+            data: formData,
+            success: function (data) {
+                let dataStatus = data.split("\n");
+                for(let i=0; i<dataStatus.length-1; i++){
+                    let status = document.createElement("i");
 
-        //             if (dataStatus[i] === "존재하는 이름입니다.") {
-        //                 $("#fileindex"+i).switchClass("primary", "danger"); 
-        //                 status.setAttribute("class", "fas fa-times statusicon");
+                    if (dataStatus[i] === "It's a real name.") {
+                        $("#fileindex"+i).switchClass("primary", "danger"); 
+                        status.setAttribute("class", "fas fa-times statusicon");
 
-        //                 let div4 = document.createElement("div");
-        //                 div4.setAttribute("class", "feedback");
-        //                 div4.textContent = "이미 존재하는 문서이름입니다.";
+                        let div4 = document.createElement("div");
+                        div4.setAttribute("class", "feedback");
+                        div4.textContent = "이미 존재하는 문서이름입니다.";
 
-        //                 document.getElementById("fileindex"+i).appendChild(div4);
-        //             }
-        //             else{
-        //                 $("#fileindex"+i).switchClass("primary", "success");
-        //                 status.setAttribute("class", "fas fa-check statusicon");
-        //             }
-        //             status.style["margin-top"] = "8px";  
-        //             $("#fileindex"+i+" .statusicon").remove();
-        //             $("#fileindex"+i+" .status").append(status);
-        //         }
+                        document.getElementById("fileindex"+i).appendChild(div4);
+                    }
+                    else if(dataStatus[i] === "successfully uploaded"){
+                        $("#fileindex"+i).switchClass("primary", "success");
+                        status.setAttribute("class", "fas fa-check statusicon");
 
-        //         return false;
-        //     },
-        //     cache: false,
-        //     contentType: false,
-        //     processData: false
-        // });
+                        getDocumentList(c3code);
+                    }
+                    else{
+                       $("#fileindex"+i).switchClass("primary", "danger"); 
+                        status.setAttribute("class", "fas fa-times statusicon"); 
+                    }
+                    status.style["margin-top"] = "8px";  
+                    $("#fileindex"+i+" .statusicon").remove();
+                    $("#fileindex"+i+" .status").append(status);
+                }
+
+                return false;
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
     }
     else{
         alert("파일을 첨부해주세요.");
     }
 
 });
-
-// drag drop upload files
-// getElementById
-function $id(id) {
-    return document.getElementById(id);
-}
-
-// call initialization file
-if (window.File && window.FileList && window.FileReader) {
-    Init();
-}
-
-//
-// initialize
-function Init() {
-
-    var fileselect = $id("fileselect");
-    var filedrag = $id("filedrag");
-
-    // file select
-    fileselect.addEventListener("change", FileSelectHandler, false);
-
-    // is XHR2 available?
-    var xhr = new XMLHttpRequest();
-    if (xhr.upload) {    
-        // file drop
-        filedrag.addEventListener("dragover", FileDragHover, false);
-        filedrag.addEventListener("dragleave", FileDragHover, false);
-        filedrag.addEventListener("drop", FileSelectHandler, false);
-    }
-
-}
 
 
 // file drag hover
@@ -441,52 +418,49 @@ function FileSelectHandler(e) {
 
 
 let ParseFile = (file, index) => {
-    let filelist = $id("filelistul");
+    let filelist = document.getElementById("filelistul");
 
     let li = document.createElement("li");
-    li.setAttribute("class", "row primary");
     li.setAttribute("id", "fileindex"+index);
+    li.setAttribute("class", "row");
 
     let div1 = document.createElement("div");
-    div1.setAttribute("class", "col-md-2");
+    div1.setAttribute("class", "col-md-1 fawrapper");
 
-    let circle = document.createElement("i");
-    circle.setAttribute("class", "far fa-circle fa-2x");
-    circle.style["margin-top"] = "8px";
+    let fileicon = document.createElement("i");
+    fileicon.setAttribute("class", "fas fa-file");
+    fileicon.style["color"] = "#0069d9";
+    fileicon.style["align-self"] = "center";
 
-    let circlenumber = document.createElement("span");
-    circlenumber.setAttribute("class", "fa-layers-text");
-    circlenumber.setAttribute("data-fa-transform", "left-2 down-1");
-    circlenumber.style["font-weight"] = "900";
-    circlenumber.textContent = filelist.getElementsByTagName("li").length + 1;
-
-    div1.appendChild(circle);
-    div1.appendChild(circlenumber);
-    li.appendChild(div1);
+    div1.appendChild(fileicon);
 
     let div2 = document.createElement("div");
-    div2.setAttribute("class", "col-md-8");
+    div2.setAttribute("class", "col-md-10");
 
-    let filename = document.createElement("p");
-    filename.setAttribute("class", "filename");
-    filename.textContent = file.name;
+    let filewrapper = document.createElement("p");
 
-    if(file.name.length > 22){
-        filename.textContent = file.name.substr(0,19) + "…";
-    }
+    let versionFileName = document.createElement("span");
+    versionFileName.textContent = file.name;
 
-    let filesize = document.createElement("p");
-    filesize.setAttribute("class", "filesize");
-    filesize.textContent = convertFileSize(file.size);
+    filewrapper.appendChild(versionFileName);
+    div2.appendChild(filewrapper);
 
-    div2.appendChild(filename);
-    div2.appendChild(filesize);
-    li.appendChild(div2);
+    let infoWrapper = document.createElement("p");
+
+    let versionDate = document.createElement("span");
+    versionDate.setAttribute("class", "filesize");
+    versionDate.textContent = convertFileSize(file.size);
+
+    infoWrapper.appendChild(versionDate);
+    div2.appendChild(infoWrapper);
 
     let div3 = document.createElement("div");
-    div3.setAttribute("class", "col-md-2 status");
+    div3.setAttribute("class", "col-md-1 fawrapper status");
 
+    li.appendChild(div1);
+    li.appendChild(div2);
     li.appendChild(div3);
+    
     filelist.appendChild(li);
 }
 
@@ -495,9 +469,6 @@ let convertFileSize = x => {
   var e = Math.floor(Math.log(x) / Math.log(1024));
   return (x / Math.pow(1024, e)).toFixed(2) + " " + s[e];
 };
-
-
-
 
 let versionManagementOpen = id => {
     getDocumentVersionList(id);
