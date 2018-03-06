@@ -3,6 +3,7 @@
 window.onload = () => {	
 	getCategory1();
 
+    //category navigation slide effect
     let accordionsMenu = $('.cd-accordion-menu');
     if( accordionsMenu.length > 0 ) {        
         accordionsMenu.each(function(){
@@ -14,6 +15,7 @@ window.onload = () => {
         });
     }
 
+    //문서 등록 => 파일 선택
     let fileselect = document.getElementById("fileselect");
     fileselect.addEventListener("change", FileSelectHandler, false);   
 }
@@ -58,6 +60,7 @@ $("#categoryModifyModal").on('show.bs.modal', function () {
     document.getElementById("categoryModifyName").value = upperCategoryName;
 });
 
+//분류 이름 수정
 let modifyCategory = () => {
     let modifyCategoryName = document.getElementById("categoryModifyName").value;
     let data = {CategoryStep : CategoryStep-1 , modifyCategoryName : modifyCategoryName , code : upperCategoryCode};
@@ -268,7 +271,6 @@ let getCategory2 = () => {
             console.log(request, status, error);
         },
     });
-
 }
 
 let getCategory3 = () => {
@@ -309,6 +311,16 @@ let getCategory3 = () => {
                 fileUploadBtn.classList.remove("disabled");
                 fileUploadBtn.style.color = "#555";
                 fileUploadBtn.setAttribute("data-toggle", "modal");
+
+                if(document.getElementById('process_c2').textContent === ''){
+                    let i2 = document.createElement("i");
+                    i2.setAttribute("class", "fas fa-angle-right fa-lg");
+                    i2.setAttribute("style", "color: #bdbdbd; margin : 0 10px;");
+
+                    let subid = $(this).parent().attr("id");
+                    document.getElementById('process_c2').textContent = $('label[for="sub-group-' + subid + '"]').text();
+                    document.getElementById('process_c2').prepend(i2);
+                }
 
                 document.getElementById('process_c3').textContent = $(this).text();
                 upperCategoryName = $(this).text();
@@ -463,7 +475,7 @@ $("#upload").submit(function(e) {
     }
 });
 
-// file selection
+//파일 선택
 function FileSelectHandler(e) {
     var files = e.target.files || e.dataTransfer.files;
     for (var i = 0, f; f = files[i]; i++) {
@@ -471,7 +483,7 @@ function FileSelectHandler(e) {
     }
 }
 
-//파일 리스트 추가
+//선택된 파일 리스트 추가
 let ParseFile = (file, index) => {
     let filelist = document.getElementById("filelistul");
 
@@ -666,9 +678,8 @@ $( "#newVersionUpload" ).change(function() {
 });
 
 
-////////////////////////////////////
-///context menu/////////////////////
-////////////////////////////////////
+
+//** context menu function list **//
 
 function clickInsideElement( e, className ) {
     var el = e.srcElement || e.target;

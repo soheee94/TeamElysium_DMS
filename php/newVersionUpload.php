@@ -59,12 +59,13 @@
 
 	if(in_array("/html/medical_document/".$ftpfilename, $contents)){
 		//[0]:filename [1]:filetype
+		$randomString = generateRandomString(5);
 		$FtpfilenameExplode = explode(".", $ftpfilename);
-		$ftpfilename = $FtpfilenameExplode[0]."_1.".$FtpfilenameExplode[1];
-		$filenameArray[0] = $filenameArray[0]."_1";
+		$ftpfilename = $FtpfilenameExplode[0].$randomString.".".$FtpfilenameExplode[1];
+		// $filenameArray[0] = $filenameArray[0]."_1";
 
 		$filenameExplode = explode(".", $filename);
-		$filename = $filenameExplode[0]."_1.".$filenameExplode[1];
+		$filename = $filenameExplode[0].$randomString.".".$filenameExplode[1];
 	}
 	
 	$tmp_file = $_FILES['file']['tmp_name'];
