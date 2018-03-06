@@ -88,25 +88,21 @@ let modifyCategory = () => {
 let deleteCategory = () => {
     if(confirm("** 주의 **\n분류 '"+ upperCategoryName + "' 을(를) 정말 삭제하시겠습니까? \n(이하의 소분류와 문서들도 함께 삭제되며 복구할 수 없습니다.)")){
         let data = {CategoryStep : CategoryStep-1 , code : upperCategoryCode}
-        $.ajax({
-            url: 'http://igrus.mireene.com/php/dms_php/deleteCategory.php',
-            type: 'POST',
-            data: data,
-            dataType: 'html',
-            success: function(data) {
-                alert("삭제되었습니다.");
-                getCategory1();
-                document.getElementById("process_c1").textContent = "";
-                document.getElementById("process_c2").textContent = "";
-                document.getElementById("process_c3").textContent = "";
-                $("#tabledocumentList").empty();
-                $("#categoryModifyModal").modal("hide");
 
-            },
-            error: function(request, status, error) {
-                console.log(request, status, error);
-            },
-        });
+        alert("안돼!");
+        // $.ajax({
+        //     url: 'http://igrus.mireene.com/php/dms_php/deleteCategory.php',
+        //     type: 'POST',
+        //     data: data,
+        //     dataType: 'html',
+        //     success: function(data) {
+
+
+        //     },
+        //     error: function(request, status, error) {
+        //         console.log(request, status, error);
+        //     },
+        // });
     }
 }
 
@@ -357,7 +353,7 @@ let getDocumentList = id => {
                 registrant.textContent = "한소희";
 
                 let date = document.createElement("td");
-                date.textContent = "2018.02.26";
+                date.textContent = value.date.split(" ")[0];
 
                 tr.appendChild(name);
                 tr.appendChild(registrant);
@@ -443,7 +439,7 @@ $("#upload").submit(function(e) {
                         $("#fileindex"+i).switchClass("primary", "success");
                         status.setAttribute("class", "fas fa-check statusicon");
 
-                        getDocumentList(c3code);
+                        
                     }
                     else{
                        $("#fileindex"+i).switchClass("primary", "danger"); 
@@ -453,6 +449,7 @@ $("#upload").submit(function(e) {
                     $("#fileindex"+i+" .statusicon").remove();
                     $("#fileindex"+i+" .status").append(status);
                 }
+                getDocumentList(c3code);
 
                 return false;
             },

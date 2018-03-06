@@ -23,6 +23,7 @@ while ($row = mysqli_fetch_array($result)) {
 	$row_array['filename'] = urlencode(iconv('UTF-8', 'EUC-KR', $row['filename']));
 	$row_array['encodefilename'] = $row['filename'];
 	$row_array['c3_code'] = $code;
+	$row_array['date'] = $row['date'];
 	
 	array_push($return_arr,$row_array);
 }

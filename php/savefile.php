@@ -31,6 +31,16 @@
 	    return $file_ary;
 	}
 
+	function generateRandomString($length = 10) {
+	    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	    $charactersLength = strlen($characters);
+	    $randomString = '';
+	    for ($i = 0; $i < $length; $i++) {
+	        $randomString .= $characters[rand(0, $charactersLength - 1)];
+	    }
+	    return $randomString;
+	}
+
 	if ($_FILES['file']) {
 	    $file_ary = reArrayFiles($_FILES['file']);
 
@@ -45,17 +55,39 @@
 		// login with username and password
 		$login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
 
+		// file exists check
+		$contents = ftp_nlist($conn_id, "/html/medical_document/");
+
+		function encoding($s1, $s2, $arr) { // 배열 전체 인코딩
+		    while (list($key, $val) = each($arr)) {
+		        $arr[$key] = iconv($s1, $s2, $val);
+		    }
+		}
+		encoding("UTF-8", "EUC-KR", $contents);
+
 	    foreach ($file_ary as $file) {
 	    	$filenamedb = $file["name"];
 	    	$filename = iconv("UTF-8", "EUC-KR", $file["name"]);
-			$tmp_file = $file["tmp_name"];
-			$remote_file = "/html/medical_document/". $filename;
 
 			//[0] : code, [1] : name
 			$dbfilename = explode("_", $filenamedb);
 			//[0] : documentcode, [1] : version
-			$code = explode("(", $dbfilename[0]);
+			//$code = explode("(", $dbfilename[0]);
 			$documentname = str_replace(".hwp", "", $dbfilename[1]);
+
+			if(in_array("/html/medical_document/".$filename, $contents)){
+				$randomString = generateRandomString(5);
+				//[0]:filename [1]:filetype
+				$FtpfilenameExplode = explode(".", $filename);
+				$filename = $FtpfilenameExplode[0].$randomString.".".$FtpfilenameExplode[1];
+				// $filenameArray[0] = $filenameArray[0]."_1";
+
+				$filenameExplode = explode(".", $filenamedb);
+				$filenamedb = $filenameExplode[0].$randomString.".".$filenameExplode[1];
+			}
+
+			$tmp_file = $file["tmp_name"];
+			$remote_file = "/html/medical_document/". $filename;
 
 			// upload a file
 			if (ftp_put($conn_id, $remote_file, $tmp_file, FTP_BINARY)) {
@@ -68,10 +100,12 @@
 					echo "It's a real name.\n";
 				}
 				else{
-					$result = mysqli_query($connection, "INSERT INTO `dms_document`(`code`, `c3_code`, `name`, `filename`) VALUES ('".$code[0]."','".$c3_code."','".$documentname."','".$filenamedb."')");
+					$code = generateRandomString();
+					$versioncode = generateRandomString();
+					$result = mysqli_query($connection, "INSERT INTO `dms_document`(`code`, `c3_code`, `name`, `filename`, `date`) VALUES ('".$code."','".$c3_code."','".$documentname."','".$filenamedb."', now())");
 
 					if($result){
-						mysqli_query($connection,"INSERT INTO `dms_documentVersion`(`code`, `document_code`, `registrant`, `version`, `file`, `date`) VALUES ('".$dbfilename[0]."','".$code[0]."','".$registrant."','0','".$filenamedb."', now())");
+						mysqli_query($connection,"INSERT INTO `dms_documentVersion`(`code`, `document_code`, `registrant`, `version`, `file`, `date`) VALUES ('".$versioncode."','".$code."','".$registrant."','0','".$filenamedb."', now())");
 						echo "successfully uploaded\n";
 					}
 				}

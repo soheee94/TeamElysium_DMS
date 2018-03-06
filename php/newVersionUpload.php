@@ -43,6 +43,16 @@
 	    }
 	}
 
+	function generateRandomString($length = 10) {
+	    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	    $charactersLength = strlen($characters);
+	    $randomString = '';
+	    for ($i = 0; $i < $length; $i++) {
+	        $randomString .= $characters[rand(0, $charactersLength - 1)];
+	    }
+	    return $randomString;
+	}
+
 	encoding("UTF-8", "EUC-KR", $contents);
 
 	$ftpfilename = iconv("UTF-8", "EUC-KR", $filename);
@@ -60,12 +70,13 @@
 	$tmp_file = $_FILES['file']['tmp_name'];
 	$remote_file = "/html/medical_document/". $ftpfilename;
 
+	$code = generateRandomString();
 	// upload a file
 	if (ftp_put($conn_id, $remote_file, $tmp_file, FTP_BINARY)) {
-		$result = mysqli_query($connection,"INSERT INTO `dms_documentVersion`(`code`, `document_code`, `registrant`, `version`, `file`, `date`) VALUES ('".$filenameArray[0]."','".$document_code."','".$registrant."','0','".$filename."', now())");
+		$result = mysqli_query($connection,"INSERT INTO `dms_documentVersion`(`code`, `document_code`, `registrant`, `version`, `file`, `date`) VALUES ('".$code."','".$document_code."','".$registrant."','0','".$filename."', now())");
 
 		if($result){
-			mysqli_query($connection, "UPDATE `dms_documentVersion` SET `version`= IF(`code` != '".$filenameArray[0]."', `version`+1 , `version`) WHERE `document_code` = '".$document_code."'");
+			mysqli_query($connection, "UPDATE `dms_documentVersion` SET `version`= IF(`code` != '".$code."', `version`+1 , `version`) WHERE `document_code` = '".$document_code."'");
 			mysqli_query($connection, "UPDATE `dms_document` SET `filename`= '".$filename."' WHERE `code` = '".$document_code."'");
 		}
 
