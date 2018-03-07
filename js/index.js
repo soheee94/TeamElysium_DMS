@@ -464,6 +464,7 @@ $("#upload").submit(function(e) {
                     $("#fileindex"+i+" .status").append(status);
                 }
                 getDocumentList(c3code);
+                e.preventDefault();  
                 return false;
             },
             cache: false,
@@ -655,7 +656,8 @@ let getDocumentVersionList = id => {
 }
 
 //TODO : 파일 올리고 나서 SUBMIT 상태
-$( "#newVersionUpload" ).change(function() {
+$( "#newVersionUpload" ).change(function(e) {
+    e.preventDefault();   
     let newVersionUploadForm = document.getElementById("newVersionUploadForm");
     let newVersionUploadData = new FormData(newVersionUploadForm);
     
@@ -673,6 +675,7 @@ $( "#newVersionUpload" ).change(function() {
             success: function (data) {
                 getDocumentVersionList(document_code);
                 getDocumentList(c3code);
+                e.preventDefault();  
             },
             cache: false,
             contentType: false,

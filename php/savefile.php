@@ -102,7 +102,7 @@
 				else{
 					$code = generateRandomString();
 					$versioncode = generateRandomString();
-					$result = mysqli_query($connection, "INSERT INTO `dms_document`(`code`, `c3_code`, `name`, `filename`, `date`) VALUES ('".$code."','".$c3_code."','".$documentname."','".$filenamedb."', now())");
+					$result = mysqli_query($connection, "INSERT INTO `dms_document`(`code`, `c3_code`, `name`, `filename`, `date`, `registrant`) VALUES ('".$code."','".$c3_code."','".$documentname."','".$filenamedb."', now(), '".$registrant."')");
 
 					if($result){
 						mysqli_query($connection,"INSERT INTO `dms_documentVersion`(`code`, `document_code`, `registrant`, `version`, `file`, `date`) VALUES ('".$versioncode."','".$code."','".$registrant."','0','".$filenamedb."', now())");
