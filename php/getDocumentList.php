@@ -24,6 +24,7 @@ while ($row = mysqli_fetch_array($result)) {
 	$row_array['encodefilename'] = $row['filename'];
 	$row_array['c3_code'] = $code;
 	$row_array['date'] = $row['date'];
+	$row_array['registrant'] = $row['registrant'];
 	
 	array_push($return_arr,$row_array);
 }

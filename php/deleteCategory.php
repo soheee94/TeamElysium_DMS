@@ -16,15 +16,15 @@ $connection = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_DATABASE);
 $CategoryStep = $_POST['CategoryStep'];
 $code = $_POST['code'];
 
-if($CategoryStep == '1'){
-	$result = mysqli_query($connection,"UPDATE `dms_category1` SET `name`='".$modifyCategoryName."' WHERE `code` = '".$code."'");
-}
-else if($CategoryStep == '2'){
-	$result = mysqli_query($connection,"UPDATE `dms_category2` SET `name`='".$modifyCategoryName."' WHERE `code` = '".$code."'");
-}
-else if($CategoryStep == '3'){
-	$result = mysqli_query($connection,"UPDATE `dms_category3` SET `name`='".$modifyCategoryName."' WHERE `code` = '".$code."'");
-}
+// if($CategoryStep == '1'){
+// 	$result = mysqli_query($connection,"UPDATE `dms_category1` SET `name`='".$modifyCategoryName."' WHERE `code` = '".$code."'");
+// }
+// else if($CategoryStep == '2'){
+// 	$result = mysqli_query($connection,"UPDATE `dms_category2` SET `name`='".$modifyCategoryName."' WHERE `code` = '".$code."'");
+// }
+// else if($CategoryStep == '3'){
+// 	$result = mysqli_query($connection,"UPDATE `dms_category3` SET `name`='".$modifyCategoryName."' WHERE `code` = '".$code."'");
+// }
 
 
 if(!$result){

@@ -154,6 +154,7 @@ let getCategory1 = () => {
                 category.appendChild(li);
         	}
 
+            //dropdown 및 folder process text 처리
             $( ".category1" ).click(function() {
                 $("#process_c2").empty();
                 $("#process_c3").empty();
@@ -312,6 +313,7 @@ let getCategory3 = () => {
                 fileUploadBtn.style.color = "#555";
                 fileUploadBtn.setAttribute("data-toggle", "modal");
 
+                //categor1 누르고 바로 category3 눌렀을 때 folder process text 처리
                 if(document.getElementById('process_c2').textContent === ''){
                     let i2 = document.createElement("i");
                     i2.setAttribute("class", "fas fa-angle-right fa-lg");
@@ -362,7 +364,7 @@ let getDocumentList = id => {
                 name.textContent = value.name;
 
                 let registrant = document.createElement("td");
-                registrant.textContent = "한소희";
+                registrant.textContent = value.registrant;
 
                 let date = document.createElement("td");
                 date.textContent = value.date.split(" ")[0];
@@ -410,7 +412,8 @@ let downloadDocument = filename => {
     window.location.href = "http://igrus.mireene.com/medical_document/" + filename;
 }
 
-//file upload
+//TODO : 파일 올리고 나서 SUBMIT 상태
+//문서 업로드
 $("#upload").submit(function(e) {
     e.preventDefault();    
     let formData = new FormData(this);
@@ -420,6 +423,7 @@ $("#upload").submit(function(e) {
 
     if(filecnt !== 0){
         formData.append('c3_code', c3code);
+        //TODO: USER INFO
         formData.append('registrant', '한소희');
 
         let status = document.createElement("i");
@@ -449,9 +453,7 @@ $("#upload").submit(function(e) {
                     }
                     else if(dataStatus[i] === "successfully uploaded"){
                         $("#fileindex"+i).switchClass("primary", "success");
-                        status.setAttribute("class", "fas fa-check statusicon");
-
-                        
+                        status.setAttribute("class", "fas fa-check statusicon");                        
                     }
                     else{
                        $("#fileindex"+i).switchClass("primary", "danger"); 
@@ -462,7 +464,6 @@ $("#upload").submit(function(e) {
                     $("#fileindex"+i+" .status").append(status);
                 }
                 getDocumentList(c3code);
-
                 return false;
             },
             cache: false,
@@ -653,12 +654,14 @@ let getDocumentVersionList = id => {
     });  
 }
 
+//TODO : 파일 올리고 나서 SUBMIT 상태
 $( "#newVersionUpload" ).change(function() {
     let newVersionUploadForm = document.getElementById("newVersionUploadForm");
     let newVersionUploadData = new FormData(newVersionUploadForm);
     
     let document_code = document.getElementById("versionListUl").getAttribute("data-id");
     newVersionUploadData.append('document_code', document_code);
+    //TODO : USER INFO
     newVersionUploadData.append('registrant', '한소희');
 
     let c3code = document.getElementById(document_code).getAttribute("data-c3code");
@@ -831,8 +834,6 @@ function clickInsideElement( e, className ) {
 
   /**
    * Positions the menu properly.
-   * 
-   * @param {Object} e The event
    */
   function positionMenu(e) {
     clickCoords = getPosition(e);
@@ -862,9 +863,8 @@ function clickInsideElement( e, className ) {
   function menuItemListener( link ) {
     let type = link.getAttribute("data-action");
     if(type === "View"){
-       versionManagementOpen(taskItemInContext.getAttribute("id"));
+        versionManagementOpen(taskItemInContext.getAttribute("id"));
     }
-    //TODO
     else if(type === "download"){
         downloadDocument(taskItemInContext.getAttribute("data-file"));
     }
@@ -873,5 +873,4 @@ function clickInsideElement( e, className ) {
     }
     toggleMenuOff();
   }
-
   initcontextmenu();
