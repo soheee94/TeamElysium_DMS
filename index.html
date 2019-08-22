@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Expires" content="Mon, 06 Jan 1990 00:00:01 GMT">
+    <!-- Set no-cache -->
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DMS</title>
+    <!-- Custom CSS -->
+    <script>
+        document.write("<link href='./css/style.css?version=" + Date.now() + "' rel='stylesheet'");
+    </script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+</head>
+
+<body>
+    <!-- header -->
+    <header>
+        <img src="./img/logo.png" width="120px" height="60px">
+<!--         <i class="fas fa-bars fa-lg" style="color: #fff; cursor: pointer; height: 60px; margin-right: 5px;"></i>     --> 
+        <p class="header_user">sohee.han@teamelysium.kr</p>
+    </header>
+    <!-- /header -->
+    <!-- top section -->
+    <section class="row">
+      <!-- 새로만들기 + dropdown -->
+      <div class="col-md-2 flex">
+        <div class="dropdown">
+          <button class="btn btn-upload" id="newUploadMenuButton" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">새로 만들기</button>
+          <div class="dropdown-menu" aria-labelledby="newUploadMenuButton">
+            <a class="dropdown-item" id="categoryAddBtn" data-toggle="modal" data-target="#categorySettingModal"><i class="fas fa-folder"></i>&nbsp;&nbsp;&nbsp;분류 추가</a>
+            <a class="dropdown-item disabled" id="fileUploadBtn" data-toggle="" data-target="#documentEnrollmentModal"><i class="fas fa-file"></i>&nbsp;&nbsp;&nbsp;문서 업로드</a>
+          </div>
+        </div>        
+      </div>
+      <!-- /새로만들기 + dropdown -->
+      <!-- category process -->
+      <div class="col-md-9 flex" style="padding-left: 0;">
+        <p id="folderprocess"><span id="process_c1"></span><span id="process_c2"></span><span id="process_c3"></span></p>
+      </div>
+      <!-- /category process -->
+      <!-- category setting + dropdown -->
+      <div class="col-md-1 flex-end dropleft" >
+        <div style="align-self: center; float: right;" id="categorySettingMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-cog fa-lg" style="cursor: pointer;"></i>
+        </div>
+        <div class="dropdown-menu" aria-labelledby="categorySettingMenuButton">
+          <a class="dropdown-item disabled" href="#" id="categoryChangeNameBtn" data-toggle="" data-target="#categoryModifyModal"><i class="fas fa-pen-square"></i>&nbsp;&nbsp;&nbsp;이름 변경</a>
+          <a class="dropdown-item disabled" href="#" id="categoryDeleteBtn" onclick=""><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;&nbsp;분류 삭제</a>
+        </div>
+      </div>
+      <!-- /category setting + dropdown -->
+    </section>
+    <!-- /top section -->
+    <!-- content -->
+    <content>
+      <!-- content wrapper -->
+        <div class="row wrapper">
+          <!-- sidebar -->
+            <div class="sidebar col-md-2">
+                <nav class="nav nav_module">
+                    <h2 class="nav_head">Category Navigation</h2>
+                    <ul class="cd-accordion-menu animate" id="category">
+                        <!--Sampe UI-->
+                        <!-- <li class="has-children category1">
+                          <input type="checkbox" name="group-1" id="group-1">
+                          <label for="group-1">
+                            <i class="fas fa-folder"></i>의료기기 인증
+                          </label>
+                          <ul class="category2">
+                            <li class="has-children">
+                              <input type="checkbox" name ="sub-group-1" id="sub-group-1">
+                              <label for="sub-group-1">
+                                <i class="fas fa-folder"></i>
+                                GMP 관련 문서
+                              </label>
+                              <ul>
+                                <li class="category3"><a href="#0">품질 매뉴얼</a></li>
+                                <li class="category3"><a href="#0">문서 기록 관리 규정</a></li>
+                                <li class="category3"><a href="#0">경영 검토 관리 규정</a></li>
+                                <li class="category3"><a href="#0">교육 훈련 규정</a></li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li> -->
+                    </ul>
+                </nav>            
+            </div>
+            <!-- /sidebar -->
+            <!-- document table -->
+            <div class="col-md-10" id="content">
+                <table class="table table-hover">
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col" style="width:60%;">이름</th>
+                      <th scope="col" style="width:20%;">등록자</th>
+                      <th scope="col" style="width:20%;">등록 날짜</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabledocumentList">
+                    <!--<tr class="task">
+                      <td>외부출처문서관리대장</td>
+                      <td>한소희</td>
+                      <td>2018.02.26</td>
+                    </tr> -->
+                  </tbody>
+                </table>                
+            </div>
+            <!-- /document table -->
+        </div>
+        <!-- /content wrapper -->
+        <!-- Context Menu -->
+        <nav id="context-menu" class="context-menu">
+            <ul class="context-menu__items">
+              <li class="context-menu__item">
+                <a href="#" class="context-menu__link" data-action="View"><i class="far fa-clock"></i>&nbsp;&nbsp;&nbsp;버전 관리</a>
+              </li>
+              <li class="context-menu__item">
+                <a href="#" class="context-menu__link" data-action="download"><i class="fas fa-download"></i>&nbsp;&nbsp;&nbsp;다운로드</a>
+              </li>
+              <div class="dropdown-divider"></div>
+              <li class="context-menu__item">
+                <a href="#" class="context-menu__link" data-action="delete"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;&nbsp;삭제</a>
+              </li>
+            </ul>
+        </nav>
+        <!-- /Context Menu -->
+    </content>
+    <!-- /content -->
+    <!-- Document Enrollment  Modal -->
+    <div class="modal fade" id="documentEnrollmentModal" tabindex="-1" role="dialog" aria-labelledby="documentEnrollmentModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="documentEnrollmentModalLabel">문서 등록</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          	          <span aria-hidden="true">&times;</span>
+          	        </button>
+                </div>
+                <div class="modal-body">
+                    <form id="upload" method="POST" class="form-group" enctype="multipart/form-data">
+                        <input type="hidden" id="MAX_FILE_SIZE" name="file" value="300000" />
+                        <label for="fileselect" class="btn" id="browse">파일 선택</label>
+                        <input type="file" name="file[]" id="fileselect" style="display : none;" data-multiple-caption="{count} files selected" multiple="multiple">
+                        <hr>
+                        <div id="filelist">
+                          <ul id="filelistul" class="modallist">   
+                          </ul>
+                        </div>
+                        <hr>
+                        <div id="bottom">
+                          <button type="submit" class="btn btn-primary">업로드</button>
+                          <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
+                        </div>
+                    </form>
+                </div><!--/modal-body-->
+            </div><!--/modal-content-->
+        </div><!--/modal-dialog-->
+    </div>
+    <!-- /Document Enrollment Modal -->
+    <!-- Version Management Modal -->
+    <div class="modal fade" id="versionManagementModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">버전 관리</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="newVersionUploadForm"  method="POST" enctype="multipart/form-data">
+                <input type="hidden" id="MAX_FILE_SIZE" name="file" value="300000" />
+                <label for="newVersionUpload" class="btn">새 버전 업로드</label>
+                <input type="file" name="file" id="newVersionUpload" style="display : none;" >
+            </form>            
+            <hr>
+            <div id="versionList">
+                <ul id="versionListUl" class="modallist">
+                    <!--Sampe UI-->
+                    <!-- <li class="row">
+                        <div class="col-md-1 fawrapper">
+                            <i class="fas fa-file" style="color: #0069d9; align-self: center;"></i>
+                        </div>
+                        <div class="col-md-10">
+                            <p><span>현재 버전</span>&nbsp;&nbsp;<span class="versionFileName">TE-F02-2(0)_품질문서배포회수대장.hwp</span></p>                            
+                            <p><span class="versionDate">2017년 11월 4일 오후 1:04</span><span class="versionRegistrant">한소희</span></p>                        
+                        </div>
+                        <div class="col-md-1 fawrapper dropdown" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v" style=" align-self: center;"></i>
+                        </div>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#"><i class="fas fa-download"></i>&nbsp;&nbsp;&nbsp;다운로드</a>
+                        </div>
+                    </li> -->
+                </ul>
+            </div>
+          </div><!--/modal-body-->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
+          </div><!--/modal-footer-->
+        </div><!--/modal-content-->
+      </div><!--/modal-dialog-->
+    </div>
+    <!-- /Version Management Modal -->
+    <!-- Category setting Modal -->
+    <div class="modal fade" id="categorySettingModal" tabindex="-1" role="dialog" aria-labelledby="categorySettingModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="categorySettingModalLabel">분류 등록</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p class="categoryTarget"><b>현재 위치 &nbsp;: </b>&nbsp;<span id="categoryLocation"></span></p>
+            <input type="text" name="categoryName" id="categoryName">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn" data-dismiss="modal">취소</button>
+            <button type="button" class="btn btn-primary" onclick="addCategory()">만들기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Category setting Modal -->
+
+    <!-- Category modify Modal -->
+    <div class="modal fade" id="categoryModifyModal" tabindex="-1" role="dialog" aria-labelledby="categoryModifyModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="categoryModifyModalLabel">분류 이름 변경</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="text" name="categoryModifyName" id="categoryModifyName">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn" data-dismiss="modal">취소</button>
+            <button type="button" class="btn btn-primary" onclick="modifyCategory()">변경</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Category modify Modal -->
+</body>
+
+<!-- jQuery CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<!-- bootstrap CDN -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<!-- FontAwesome CDN -->
+<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+<!--jquery UI CDN-->
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<!-- Custom JS -->
+<script>
+    document.write("<script type='text/javascript' src='./js/index.js?version=" + Date.now() + "'><\/script>");
+</script>
+
+</html>
